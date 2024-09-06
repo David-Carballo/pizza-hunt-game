@@ -1,0 +1,49 @@
+body {
+    margin: 0;
+    padding: 0;
+    background-color: lightgreen;
+}
+
+.container {
+    background-color: lightgray;
+    width: 800px;
+    height: 500px;
+    
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    margin: 30px;
+}
+
+#start-scene {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-content: center;
+}
+
+#tutorial-container {
+    display: flex;
+    justify-content: space-around;
+}
+
+h1 {
+    font-size: 3rem;
+    align-self: center;
+}
+
+#game-box{
+    background-color: cadetblue;
+    align-self: center;
+    width: 700px;
+    height: 400px;
+    margin: 20px;
+
+    overflow: hidden;
+}
+
+#game-scene, #end-scene {
+    display: none;
+}
+
