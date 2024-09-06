@@ -1,12 +1,14 @@
-/** 
-* ! BUGS TO FIXED
-**/
+
+/**
+ * * COMPLETED
+*/
+// Structure of code
+
 
 /** 
 * TODO
 **/
 
-// 🟠 Structure of code
 // 🟠 Create scene START
 // 🟠 Create scene GAME
 // 🟠 Create scene END GAME
@@ -44,12 +46,12 @@
 // 🟡 Rotar ingredientes
 
 
+/** 
+* ! BUGS TO FIXED
+**/
+
 /**
  * ? TO CHECK
  */
 
 
-
-/**
- * * COMPLETED
- */
