@@ -1,5 +1,5 @@
 class Ingredient {
-    constructor(){
+    constructor(type, placement=false){
         this.x = 100;
         this.y = 100;
         this.w = 128/1.5;
@@ -11,8 +11,8 @@ class Ingredient {
         this.negativeForce = 0.98;
 
         this.node = document.createElement("img");
-        this.node.src = "../imgs/bacon.png";
-
+        this.node.src = `../imgs/${type}.png`;
+        if(placement) this.node.style.filter = "brightness(50%)"
         gameBoxNode.appendChild(this.node);
 
         this.node.style.position = "absolute";
