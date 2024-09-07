@@ -37,25 +37,27 @@ function startGame(){
     //loop time of game
     timerGame = setInterval(()=>{
         gameLoop();
-
-        checkCollisionFloor(); //
-
     }, Math.round(1000/60));
 
 
 };
 
 function gameLoop(){
+    
     ingredient.gravity();
     ingredient.movement();
+
+    checkCollisionFloor();
 };
+
+
 
 function checkCollisionFloor(){
     if(ingredient.y + ingredient.h >= gameBoxNode.offsetHeight) {
-        console.log("SUELOOO")
-        //❓❓❓
+        ingredient.removeIngredient();
     }
 }
+
 
 
 /**
@@ -64,23 +66,13 @@ function checkCollisionFloor(){
 
 startBtnNode.addEventListener("click", startGame);
 window.addEventListener("keydown", (event)=>{
-    switch(event.key){
-        case "a":
-            keyLeft = true;
-            break;
-        case "d":
-            keyRight = true;
-            break;
-        case "s":
-            keyDown = true;
-            break;
-        default:
-            break;
-    }
+    if(event.key === "a")  keyLeft = true;
+    if(event.key === "d")  keyRight = true;
+    if(event.key === "s")  keyDown = true;
 });
 
 window.addEventListener("keyup", (event)=>{
-    keyDown = false;
     keyLeft = false;
     keyRight = false;
+    keyDown = false;
 });

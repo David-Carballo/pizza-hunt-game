@@ -3,32 +3,30 @@
  * * COMPLETED
 */
 // Structure of code
+// Create gameLoop and IntervalGame
+// Create Ingredients Class ()
+//   add function gravity ingredient
+//   add function movement ingredient
 
 
 /** 
 * TODO
 **/
 
-// 🟠 Create scene START
-// 🟠 Create scene GAME
-// 🟠 Create scene END GAME
-
-// 🟠 Change scenes
-// 🟠 Create gameLoop and IntervalGame
-
 // 🟠 imagenes y fuentes
 
-// 🟠 Create Ingredients Class ()
-// 🟠   add function gravity ingredient
-// 🟠   add function movement ingredient
+// 🟠   add Collision in main.js -> Comprobar el %de colision y añadir score
 
 // 🟠 Create Pizza Class () -> arrayConHuecos[], huecosCompletados,
 // 🟠   add TiempoTotal de pizza = ingredientes * tiempo de gravity * height pantalla
 
-// 🟠   add Collision in main.js -> Comprobar el %de colision y añadir score
 
+// 🟠 Change to game over scene
 // 🟠 add Restart button and function in scene END GAME
 
+// 🟠 design scene START
+// 🟠 design scene GAME
+// 🟠 design scene END GAME
 
 // After MVP
 
