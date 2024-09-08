@@ -1,13 +1,18 @@
 /**
  * * DOM 
 */
-
+//Views
 const startViewNode = document.querySelector("#start-scene");
 const gameViewNode = document.querySelector("#game-scene");
 const endViewNode = document.querySelector("#end-scene");
+
+//Buttons
 const startBtnNode = document.querySelector("#start-btn");
 
+///Nodes
 const gameBoxNode = document.querySelector("#game-box");
+let pizzaNode = null;
+
 
 /**
  * * VARIABLES GLOBALES
@@ -15,7 +20,7 @@ const gameBoxNode = document.querySelector("#game-box");
 
 let timerGame = null;
 let pizza = null;
-let ingredient = null;
+let currentIngredient = null;
 let placeIngredient = null;
 
 
@@ -29,15 +34,17 @@ let keyRight = null;
 
 function startGame(){
 
-    //change scenes
+    //Change scenes
     startViewNode.style.display = "none";
     gameViewNode.style.display = "flex";
 
-    //create objects
-    ingredient = new Ingredient("bacon");
-    placeIngredient = new Ingredient("bacon",true);
-    placeIngredient.y = 300;
-    placeIngredient.updatePos();
+    //Create first pizza
+    pizza = new Pizza();
+
+    //Create current ingredient
+    // currentIngredient = new Ingredient(100, 0, "tomato");
+    // placeIngredient = new Ingredient(100, 300, "tomato",true);
+
 
     //loop time of game
     timerGame = setInterval(()=>{
@@ -48,30 +55,32 @@ function startGame(){
 };
 
 function gameLoop(){
-    
-    ingredient.gravity();
-    ingredient.movement();
-
-    checkCollisionFloor();
-    checkCorrectPlacement(ingredient, placeIngredient);
+    if(currentIngredient !== null) {
+        currentIngredient.gravity();
+        currentIngredient.movement();
+        checkCollisionFloor();
+    }
 };
 
-function checkCorrectPlacement(object, place) {
-    if ( object.x < place.x + place.w &&
-        object.x + object.w > place.x &&
-        object.y < place.y + place.h &&
-        object.y + object.h > place.y
-      ) {
-        // Collision detected!
-        console.log(place.node);
-        place.node.style.filter = "";
-        object.removeIngredient();
-      }
+//Check if currentIngredient placed in slot
+function checkCorrectPlacement(ingredient, slot) {
+    if (ingredient.x < slot.x  + slot.w &&
+        ingredient.x + ingredient.w > slot.x &&
+        ingredient.y < slot.y  + slot.h &&
+        ingredient.y + ingredient.h > slot.y
+    ) {
+        // console.log("Colocado!");
+        slot.node.style.filter = "";
+        ingredient.removeIngredient();
+        currentIngredient = null;
+    }
 }
 
+//Check if currentIngredient collision with Floor
 function checkCollisionFloor(){
-    if(ingredient.y + ingredient.h >= gameBoxNode.offsetHeight) {
-        ingredient.removeIngredient();
+    if(currentIngredient.y + currentIngredient.h >= gameBoxNode.offsetHeight) {
+        currentIngredient.removeIngredient();
+        currentIngredient = null;
     }
 }
 
@@ -81,14 +90,31 @@ function checkCollisionFloor(){
 */
 
 startBtnNode.addEventListener("click", startGame);
+
 window.addEventListener("keydown", (event)=>{
-    if(event.key === "a")  keyLeft = true;
-    if(event.key === "d")  keyRight = true;
-    if(event.key === "s")  keyDown = true;
+    if(event.key === "a" && !keyLeft && currentIngredient)  {
+        keyLeft = true;
+        currentIngredient.speedX = -3;
+        currentIngredient.movement();
+    }
+    if(event.key === "d" && !keyRight && currentIngredient)  {
+        keyRight = true;
+        currentIngredient.speedX = 3;
+        currentIngredient.movement();
+    }
+    if(event.key === "s" && !keyDown && currentIngredient){
+        keyDown = true;
+        currentIngredient.gravityAcc += 0.1;
+        currentIngredient.movement();
+    } 
+
+    if(event.key === " ") checkCorrectPlacement(currentIngredient, placeIngredient);
+    
 });
 
 window.addEventListener("keyup", (event)=>{
     keyLeft = false;
     keyRight = false;
     keyDown = false;
+    
 });

@@ -24,17 +24,17 @@
 // 🟠 Change to game over scene
 // 🟠 add Restart button and function in scene END GAME
 
+// 🟠 remove use pointer to drag objects
 // 🟠 design scene START
 // 🟠 design scene GAME
 // 🟠 design scene END GAME
 
-// After MVP
-
-//🔵 Añadir Dificultat cuando aparezca nueva pizza
-//🔵 Create TUTORIAL on StartView
-//🔵 Añadir Timer
-//🔵 Añadir Score%
-//🔵 Añadir Vidas
+// 🟠 After MVP
+    //    Añadir Dificultat cuando aparezca nueva pizza
+    //    Create TUTORIAL on StartView
+    //    Añadir Timer
+    //    Añadir Score%
+    //    Añadir Vidas
 
 //Bonus
 
@@ -43,13 +43,13 @@
 // 🟡 Añadir ranking users
 // 🟡 Rotar ingredientes
 
-
-/** 
-* ! BUGS TO FIXED
-**/
-
 /**
  * ? TO CHECK
- */
+*/
 
+// 🔵 Place ingredient "space" pressed when is placed
+// 🔵 Place ingredient "space" pressed when is placed
 
+/** 
+ * ! BUGS TO FIXED
+**/

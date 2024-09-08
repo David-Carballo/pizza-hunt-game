@@ -1,23 +1,31 @@
 class Ingredient {
-    constructor(type, placement=false){
-        this.x = 100;
-        this.y = 100;
-        this.w = 128/1.5;
-        this.h = 32/1.5;
+    constructor(x, y, type){
+        this.x = x;
+        this.y = y;
+        
+        this.w = 64;
+        this.h = 64;
+
+        this.type = type;
+
+        //Velocidades
         this.gravityAcc = 0.15;
         this.speedX = 0;
         this.speedY = 0;
-        this.maxSpeed = 2;
-        this.negativeForce = 0.98;
+        this.maxSpeed = 5;
+        this.negativeForce = 0.99;
 
+        console.log(type);
         this.node = document.createElement("img");
         this.node.src = `../imgs/${type}.png`;
-        if(placement) this.node.style.filter = "brightness(50%)"
+        // if(placement) this.node.style.filter = "brightness(50%)";
+        // gameBoxNode.querySelector("ul").appendChild(this.node);
         gameBoxNode.appendChild(this.node);
 
         this.node.style.position = "absolute";
         this.node.style.width = `${this.w}px`;
         this.node.style.height = `${this.h}px`;
+        this.node.style.zIndex = 2;
         this.updatePos();
     }
 
@@ -33,22 +41,39 @@ class Ingredient {
 
     movement(){
         //Accelerate to MAX Speed (normalize diagonal❓❓)
-        if(keyLeft) {
-            if(this.speedX > -this.maxSpeed) this.speedX--;
-        }
-        if(keyRight) {
-            if(this.speedX < this.maxSpeed) this.speedX++;
-        }
-        if(keyDown) {
-            if(this.speedY < this.maxSpeed) this.speedY+=0.2;
-        }
+        // if(keyLeft) {
+        //     if(-this.maxSpeed < this.speedX) this.speedX-=1;
+        // }
+        // if(keyRight) {
+        //     if(this.speedX < this.maxSpeed) this.speedX+=1;
+        // }
+        // if(keyDown) {
+        //     if(this.speedY < this.maxSpeed) this.speedY+=0.2;
+        // }
+
+        // if(keyLeft) {
+        //     this.speedX=-3;
+        // }
+        // if(keyRight) {
+        //     this.speedX= 3;
+        // }
+        // if(keyDown) {
+        //     this.speedY = 2;
+        // }
 
         //Friction to reduce speed to 0 when dont pressed key
-        this.speedX *= this.negativeForce;
-        this.speedY *= this.negativeForce;
-        this.x += this.speedX;
-        this.y += this.speedY;
-        // console.log(this.speedX,this.speedY);
+        // this.speedX *= this.negativeForce;
+        // this.speedY *= this.negativeForce;
+
+        if(keyDown && keyLeft || keyDown && keyRight) {
+            this.x += this.speedX*Math.sin(45);
+            this.y += this.speedY*Math.sin(45);
+        }
+        else {
+            this.x += this.speedX;
+            this.y += this.speedY;
+        }
+
         this.updatePos();
     }
 

@@ -2,13 +2,14 @@ body {
     margin: 0;
     padding: 0;
     background-color: lightgreen;
+
 }
 
 .container {
     background-color: lightgray;
-    width: 800px;
-    height: 500px;
-    
+    width: 1024px;
+    height: 768px;
+    border-radius: 10px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -39,10 +40,12 @@ h1 {
 #game-box{
     background-color: cadetblue;
     align-self: center;
-    width: 700px;
-    height: 400px;
+    width: 900px;
+    height: 675px;
     margin: 20px;
+    border-radius: 10px;
 
+    user-select: none;
     overflow: hidden;
     position: relative;
 }
