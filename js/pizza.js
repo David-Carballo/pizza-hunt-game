@@ -23,6 +23,8 @@ class Pizza {
 
         //Add styles to pizza
         this.setStylePizza();
+
+        
         
         console.log("Pizza creada");
     }
@@ -54,6 +56,33 @@ class Pizza {
             randomIng = Math.floor(Math.random() * this.ingredientsTypes.length);
             ing = this.ingredientsTypes[randomIng];
         }
+    }
+
+    placeSlotsCircle(total){
+        //Seleccionamos un ingrediente aleatorio
+        let randomIng = Math.floor(Math.random() * this.ingredientsTypes.length);
+        let ing = this.ingredientsTypes[randomIng];
+        let x = this.x + this.w/2;
+        let y = this.y + this.h/2;
+        for (let i = 0; i < total-1; i++) {
+            this.ingredientsList.push(ing);
+
+            //360/length
+            let degree = 360/(total-1) * i;
+            let rad = degree * Math.PI/180;
+            
+            //(x,y) => (cos a, sin a) -> antihorario -> a en radians
+            let posX = x + Math.cos(rad)*150;
+            let posY = y + Math.sin(rad)*150;
+
+            this.slots.push(new SlotIngredient(posX-32, posY-32, ing));
+
+            randomIng = Math.floor(Math.random() * this.ingredientsTypes.length);
+            ing = this.ingredientsTypes[randomIng];
+        }
+
+        this.ingredientsList.push(ing);
+        this.slots.push(new SlotIngredient(x, y, ing));
 
     }
     

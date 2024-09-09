@@ -50,7 +50,7 @@ function startGame(){
 
     // Place Slots in Pizza
     timeoutId = setTimeout(()=>{
-        pizza.placeSlots(2);
+        pizza.placeSlotsCircle(8);
         clearTimeout(timeoutId)}
     ,2000);
 

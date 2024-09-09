@@ -28,13 +28,26 @@ body {
 }
 
 #start-scene {
-    background-image: url("../imgs/background_2.png");
+    background-image: url("../imgs/background.png");
     background-position: center;
     background-size: cover;
+}
+
+#start-scene>img {
+    align-self: center;
+    width: 622px;
+    height: auto;
+}
+
+#tutorial-container {
     display: flex;
-    flex-direction: column;
     justify-content: space-around;
-    align-content: center;
+    align-items: flex-end;
+}
+
+#tutorial-container img{
+    position: relative;
+    top: -100px;
 }
 
 button {
@@ -50,7 +63,6 @@ button {
     border: 4px solid #894A52;
     /* border: none; */
     border-radius: 10px;
-    margin-top: 100px;
     align-self: center;
 }
 
@@ -60,11 +72,6 @@ button:hover {
     transition: width 0.5s, letter-spacing 0.5s;
     color: #894A52;
     cursor: pointer
-}
-
-#tutorial-container {
-    display: flex;
-    justify-content: space-around;
 }
 
 h1 {
