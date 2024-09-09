@@ -23,5 +23,9 @@ class SlotIngredient {
         this.node.style.filter = "brightness(50%)";
         this.node.style.position = "absolute";
     }
+
+    //Change filter when ingredient is place
+    correctPlacement(correct){}
+    
     
 }

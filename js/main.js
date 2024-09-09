@@ -42,8 +42,14 @@ function startGame(){
     pizza = new Pizza();
 
     //Create current ingredient
-    // currentIngredient = new Ingredient(100, 0, "tomato");
-    // placeIngredient = new Ingredient(100, 300, "tomato",true);
+    let timeoutId = setTimeout(()=>{
+        currentIngredient = new Ingredient(100, 0, "mushroom"); 
+        clearTimeout(timeoutId)},3000);
+
+    timeoutId = setTimeout(()=>{
+        pizza.placeIngredients(8);
+        clearTimeout(timeoutId)},2000);
+    // currentIngredient = new Ingredient(100, 0, "mushroom");
 
 
     //loop time of game
@@ -116,5 +122,7 @@ window.addEventListener("keyup", (event)=>{
     keyLeft = false;
     keyRight = false;
     keyDown = false;
+    // currentIngredient.speedX = 0;
+    // currentIngredient.speedY = 0;
     
 });

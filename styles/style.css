@@ -1,8 +1,17 @@
+@import url('https://fonts.googleapis.com/css2?family=Itim&family=Lilita+One&family=Mali:wght@400;500;600;700&display=swap');
+
+/*
+    lightred: #E57A82
+    darkred: #894A52
+
+*/
+
 body {
     margin: 0;
     padding: 0;
-    background-color: lightgreen;
-
+    background-color: black;
+    display: flex;
+    justify-content: center;
 }
 
 .container {
@@ -18,13 +27,37 @@ body {
 }
 
 #start-scene {
-    background-image: url("../imgs/background2.png");
+    background-image: url("../imgs/background_2.png");
     background-position: center;
     background-size: cover;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
     align-content: center;
+}
+
+#start-btn {
+    color: white;
+    font-family:  "Lilita One";
+    font-size: 30px;
+    text-transform: uppercase;
+    text-align: center;
+    width: 200px;
+    height: 60px;
+
+    background-color: #E57A82;
+    border: 4px solid #894A52;
+    /* border: none; */
+    border-radius: 10px;
+    margin-top: 100px;
+    align-self: center;
+}
+
+#start-btn:hover {
+    width: 250px;
+    letter-spacing: 5px;
+    transition: width 0.5s, letter-spacing 0.5s;
+    color: #894A52;
 }
 
 #tutorial-container {
@@ -38,7 +71,7 @@ h1 {
 }
 
 #game-box{
-    background-color: cadetblue;
+    background-image: url(../imgs/mantel.png);
     align-self: center;
     width: 900px;
     height: 675px;
@@ -46,11 +79,37 @@ h1 {
     border-radius: 10px;
 
     user-select: none;
+    pointer-events: none;
     overflow: hidden;
     position: relative;
 }
 
-#game-scene, #end-scene {
-    display: none;
+#game-box p {
+    color: white;
+    font-family: 'Lilita One';
+    font-size: 30px;
+    -webkit-text-stroke: 1px black;
+    z-index: 3;
 }
 
+#timer {
+    position: absolute;
+    left: 50px;
+    top: 0px;
+}
+
+#score {
+    position: absolute;
+    left: 700px;
+    top: 0px;
+}
+
+#game-scene, #end-scene {
+    display: none;
+    animation: show 2s;
+}
+
+@keyframes show {
+    0% {left: -500px;}
+    100% {left: 300px;}
+}

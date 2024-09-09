@@ -12,19 +12,22 @@ class Pizza {
         gameBoxNode.appendChild(this.node);
         pizzaNode = this.node;
 
-        this.setStylePizza();
-
         //Place slots
         let ulNode = document.createElement("ul");
         ulNode.id = "places-list";
         gameBoxNode.append(ulNode);
 
-        
         this.slots.push("mushroom");
         this.slots.push("pepperoni");
         this.slots.push("onion");
-        this.slots.push("pepper");
-        this.placeIngredients(4);
+        this.slots.push("pepper");      
+        this.slots.push("mushroom");
+        this.slots.push("pepperoni");
+        this.slots.push("onion");
+        this.slots.push("pepper");   
+
+        this.setStylePizza();
+        
 
         this.ingrediente = null;
         console.log("Pizza creada");
@@ -35,9 +38,10 @@ class Pizza {
         this.node.style.position = "relative";
         this.node.style.width = `${this.w}px`;
         this.node.style.height = `${this.h}px`;
-        this.node.style.left = `${this.x}px`;
         this.node.style.top = `${this.y}px`;
         this.node.style.borderRadius = "500px";
+        this.node.style.animation = ("show 2s");
+        this.node.style.left = `${this.x}px`;
     };
 
     //Place randomly each slot
