@@ -37,20 +37,32 @@ function startGame(){
     //Change scenes
     startViewNode.style.display = "none";
     gameViewNode.style.display = "flex";
+    
+    //Entrada pala madera
+    let palaNode = document.createElement("img");
+    palaNode.src = "../imgs/pala.png";
+    gameBoxNode.appendChild(palaNode);
+    palaNode.style.animation = ("show2 3s");
+    palaNode.style.zIndex = 0.5;
+    palaNode.style.position ="absolute";
+    palaNode.style.top ="100px";
+    palaNode.style.left ="-891px";
 
     //Create first pizza
     pizza = new Pizza();
+
 
     //Create current ingredient
     let timeoutId = setTimeout(()=>{
         currentIngredient = new Ingredient(600, 0, pizza.ingredientsList[0]);
         pizza.ingredientsList.shift() 
+        palaNode.remove();
         clearTimeout(timeoutId)}
     ,3000);
 
     // Place Slots in Pizza
     timeoutId = setTimeout(()=>{
-        pizza.placeSlotsCircle(8);
+        pizza.placeSlotsCircle(10);
         clearTimeout(timeoutId)}
     ,2000);
 
@@ -71,16 +83,16 @@ function gameLoop(){
 
 //Check if currentIngredient placed in slot
 function checkCorrectPlacement() {
-    let hasCollided = false;
+    let hasCollided = -1;
+    
     for (let i = 0; i < pizza.slots.length; i++) {
         let slot = pizza.slots[i];
         
         hasCollided = collision(currentIngredient, slot)
-        //calcular Area de collision 🟠
+        
         if(hasCollided) {
             if(slot.correctPlacement(currentIngredient.type)){
                 pizza.totalIngPlaced++;
-                //.style.innerText = PERFECT!
             };
             //else .style.innerText = PERFECT!
             currentIngredient.removeIngredient();
@@ -89,21 +101,73 @@ function checkCorrectPlacement() {
         }
     }
 
-    //Ingrediente sin colocar 🟠
     if(!hasCollided){
         currentIngredient.removeIngredient();
         currentIngredient = null;
     }
+
+    let h2Node = document.createElement("h2");
+    document.querySelector("ul").appendChild(h2Node);
+    h2Node.style.position = "absolute";
+    h2Node.style.width = "200px";
+    h2Node.style.fontSize = "32px";
+    h2Node.style.left = `${500}px`;
+    h2Node.style.top = `${50}px`;   
+    h2Node.style.textAlign = "center";
+    h2Node.style.webkitTextStroke = "1px white";
+
+    // puede colisionar y ser diferente type 🟠
+    switch(hasCollided){
+        case 4:
+            h2Node.innerText = "PERFECT";
+            h2Node.style.color = "#28a745";
+            break;
+        case 3:
+            h2Node.innerText = "GREAT";
+            h2Node.style.color = "#ffd700";
+            break;
+        case 2:
+            h2Node.innerText = "GOOD";
+            h2Node.style.color = "#ffeb3b";
+            break;
+        case 1:
+            h2Node.innerText = "POOR";
+            h2Node.style.color =  "#ff6f00";
+            break;
+        default:
+            h2Node.innerText = "MISS";
+            h2Node.style.color = "#dc3545";
+            break;
+    
+    }
+    h2Node.style.animation = "correct 2s";
+    // console.log(h2Node.style.textAlign);
+
+    let timerAnimation = setTimeout(()=>{
+        h2Node.remove();
+        clearTimeout(timerAnimation)
+    }, 1880)
+
     
 }
 
+//Return truthy area
 function collision(ingredient, slot){
     if (ingredient.x < slot.x + slot.w &&
         ingredient.x + ingredient.w > slot.x &&
         ingredient.y < slot.y + slot.h &&
         ingredient.y + ingredient.h > slot.y
-    ) return true;
-    else return false;
+    ) {
+        let widthIntersection = Math.max(ingredient.x, slot.x) - Math.min(ingredient.x + ingredient.w, slot.x + slot.w);
+        let heightIntersection = Math.max(ingredient.y, slot.y) - Math.min(ingredient.y + ingredient.h, slot.y + slot.h);
+        let area = (widthIntersection*heightIntersection/(slot.w*slot.h)*100);
+
+        if(area > 70) return 4;
+        else if(area > 50) return 3;
+        else if(area > 35) return 2;
+        else return 1;
+    }
+    else return 0;
 }
 
 //Check if currentIngredient collision with Floor
@@ -111,7 +175,30 @@ function checkCollisionFloor(){
     if(currentIngredient.y + currentIngredient.h >= gameBoxNode.offsetHeight) {
         currentIngredient.removeIngredient();
         currentIngredient = null;
-        // gameOver(); 🟠
+        checkPizzaCompleted();
+    }
+}
+
+function checkPizzaCompleted() {
+    if(pizza.ingredientsList.length > 0) {
+        let timerDrop = setTimeout(()=> {
+            currentIngredient = new Ingredient(600, 0, pizza.ingredientsList[0]);
+            pizza.ingredientsList.shift() 
+            clearTimeout(timerDrop);
+        }, 1000);    
+    }
+    else {//Pizza has completed 🟠
+        let h1CompleteNode = document.createElement("h1");
+        if(pizza.totalIngPlaced === pizza.slots.length) h1CompleteNode.innerText = "GOOD JOB";
+        else h1CompleteNode.innerText = "MEC MEC";
+        gameBoxNode.appendChild(h1CompleteNode);
+        h1CompleteNode.style.zIndex = 3;
+        h1CompleteNode.style.position = "absolute";
+        h1CompleteNode.style.left = "400px";
+        h1CompleteNode.style.top = "250px";
+        let timerGameOver = setTimeout(()=> {
+            gameOver();
+        }, 1000);  
     }
 }
 
@@ -164,27 +251,7 @@ window.addEventListener("keydown", (event)=>{
 
     if(event.key === " ") {
         checkCorrectPlacement();
-
-        if(pizza.ingredientsList.length > 0) {
-            let timerDrop = setTimeout(()=> {
-                currentIngredient = new Ingredient(600, 0, pizza.ingredientsList[0]);
-                pizza.ingredientsList.shift() 
-                clearTimeout(timerDrop);
-            }, 1000);    
-        }
-        else {//Pizza has completed 🟠
-            let h1CompleteNode = document.createElement("h1");
-            if(pizza.totalIngPlaced === pizza.slots.length) h1CompleteNode.innerText = "GOOD JOB";
-            else h1CompleteNode.innerText = "MEC MEC";
-            gameBoxNode.appendChild(h1CompleteNode);
-            h1CompleteNode.style.zIndex = 3;
-            h1CompleteNode.style.position = "absolute";
-            h1CompleteNode.style.left = "400px";
-            h1CompleteNode.style.top = "250px";
-            let timerGameOver = setTimeout(()=> {
-                gameOver();
-            }, 1000);  
-        }
+        checkPizzaCompleted();
     }
 });
 

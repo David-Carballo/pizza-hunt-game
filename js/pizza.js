@@ -75,14 +75,17 @@ class Pizza {
             let posX = x + Math.cos(rad)*150;
             let posY = y + Math.sin(rad)*150;
 
-            this.slots.push(new SlotIngredient(posX-32, posY-32, ing));
+            let randVariationX = Math.floor(Math.random() * 10);
+            let randVariationY = Math.floor(Math.random() * 10);
+
+            this.slots.push(new SlotIngredient(posX-32+randVariationX, posY-32+randVariationY, ing));
 
             randomIng = Math.floor(Math.random() * this.ingredientsTypes.length);
             ing = this.ingredientsTypes[randomIng];
         }
 
         this.ingredientsList.push(ing);
-        this.slots.push(new SlotIngredient(x, y, ing));
+        this.slots.push(new SlotIngredient(x-32, y-32, ing));
 
     }
     

@@ -122,6 +122,20 @@ h1 {
     100% {left: 300px;}
 }
 
+@keyframes show2 {
+    0% {left: -891px;}
+    65% {left: -100px;}
+    100% {left: -891px;}
+}
+
+@keyframes correct {
+    0%    { font-size: 30px; opacity: 0; }
+    40%   { font-size: 50px; opacity: 1; }
+    60%   { font-size: 50px; opacity: 1; }
+    100%  { font-size: 50px; opacity: 0; }
+  }
+  
+
 #end-scene h1{
     font-size: 50px;
     

@@ -53,8 +53,7 @@ class SlotIngredient {
             this.node.style.filter = "";
             return true;
         }
-        else return false;
+        return false;
     }
-    
     
 }
