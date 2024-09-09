@@ -8,6 +8,7 @@ const endViewNode = document.querySelector("#end-scene");
 
 //Buttons
 const startBtnNode = document.querySelector("#start-btn");
+const resetBtnNode = document.querySelector("#reset-btn");
 
 ///Nodes
 const gameBoxNode = document.querySelector("#game-box");
@@ -21,7 +22,6 @@ let pizzaNode = null;
 let timerGame = null;
 let pizza = null;
 let currentIngredient = null;
-let placeIngredient = null;
 
 
 let keyDown = null;
@@ -47,7 +47,7 @@ function startGame(){
         clearTimeout(timeoutId)},3000);
 
     timeoutId = setTimeout(()=>{
-        pizza.placeIngredients(8);
+        pizza.placeIngredients(4);
         clearTimeout(timeoutId)},2000);
     // currentIngredient = new Ingredient(100, 0, "mushroom");
 
@@ -69,17 +69,32 @@ function gameLoop(){
 };
 
 //Check if currentIngredient placed in slot
-function checkCorrectPlacement(ingredient, slot) {
-    if (ingredient.x < slot.x  + slot.w &&
-        ingredient.x + ingredient.w > slot.x &&
-        ingredient.y < slot.y  + slot.h &&
-        ingredient.y + ingredient.h > slot.y
-    ) {
-        // console.log("Colocado!");
-        slot.node.style.filter = "";
-        ingredient.removeIngredient();
-        currentIngredient = null;
+function checkCorrectPlacement() {
+    console.log("space");
+    const slotsNodeList = gameBoxNode.querySelectorAll("#slots-list img");
+
+    for (let i = 0; i < pizza.slots.length; i++) {
+        let slot = pizza.slots[i];
+        console.log(slot);
+
+        //calcular Area de collision 🟠
+        if(collision(currentIngredient, slot)) {
+            slot.node.style.filter = "";
+            currentIngredient.removeIngredient();
+            currentIngredient = null;
+
+            break;
+        }
     }
+}
+
+function collision(ingredient, slot){
+    if (ingredient.x < slot.x + slot.w &&
+        ingredient.x + ingredient.w > slot.x &&
+        ingredient.y < slot.y + slot.h &&
+        ingredient.y + ingredient.h > slot.y
+    ) return true;
+    else return false;
 }
 
 //Check if currentIngredient collision with Floor
@@ -87,7 +102,23 @@ function checkCollisionFloor(){
     if(currentIngredient.y + currentIngredient.h >= gameBoxNode.offsetHeight) {
         currentIngredient.removeIngredient();
         currentIngredient = null;
+        // gameOver(); 🟠
     }
+}
+
+function gameOver() {
+    resetGameState();
+
+    //DOM Game Over
+
+    //Change scenes
+    gameViewNode.style.display = "none";
+    endViewNode.style.display = "flex"
+
+}
+
+function resetGameState(){ //🟠
+
 }
 
 
@@ -96,6 +127,7 @@ function checkCollisionFloor(){
 */
 
 startBtnNode.addEventListener("click", startGame);
+resetBtnNode.addEventListener("click", resetGameState);
 
 window.addEventListener("keydown", (event)=>{
     if(event.key === "a" && !keyLeft && currentIngredient)  {
@@ -114,7 +146,7 @@ window.addEventListener("keydown", (event)=>{
         currentIngredient.movement();
     } 
 
-    if(event.key === " ") checkCorrectPlacement(currentIngredient, placeIngredient);
+    if(event.key === " ") checkCorrectPlacement();
     
 });
 
@@ -124,5 +156,4 @@ window.addEventListener("keyup", (event)=>{
     keyDown = false;
     // currentIngredient.speedX = 0;
     // currentIngredient.speedY = 0;
-    
 });

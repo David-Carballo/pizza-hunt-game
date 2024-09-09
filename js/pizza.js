@@ -5,31 +5,22 @@ class Pizza {
         this.w = 500;
         this.h = 500;
 
+        this.ingredientsTypes = ["mushroom", "pepperoni", "onion", "pepper", "bacon", "tomato"];
         this.slots = [];
 
-
+        //Create node
         this.node = document.createElement("img");
         gameBoxNode.appendChild(this.node);
         pizzaNode = this.node;
 
         //Place slots
         let ulNode = document.createElement("ul");
-        ulNode.id = "places-list";
+        ulNode.id = "slots-list";
         gameBoxNode.append(ulNode);
 
-        this.slots.push("mushroom");
-        this.slots.push("pepperoni");
-        this.slots.push("onion");
-        this.slots.push("pepper");      
-        this.slots.push("mushroom");
-        this.slots.push("pepperoni");
-        this.slots.push("onion");
-        this.slots.push("pepper");   
-
+        //Add styles to pizza
         this.setStylePizza();
         
-
-        this.ingrediente = null;
         console.log("Pizza creada");
     }
 
@@ -46,12 +37,19 @@ class Pizza {
 
     //Place randomly each slot
     placeIngredients(total){
+        //Seleccionamos un ingrediente aleatorio
+        let randomIng = Math.floor(Math.random() * this.ingredientsTypes.length);
+        let ing = this.ingredientsTypes[randomIng];
+
         for (let i = 0; i < total; i++) {
-            console.log(this.node.getBoundingClientRect())
+            // console.log(this.node.getBoundingClientRect())
+            // Posicion random del slot
             let randomX = Math.floor(Math.random() * (400 - 64)) + this.x+50;
             let randomY = Math.floor(Math.random() * (400 - 64)) + this.y+50;
-            this.ingrediente = new SlotIngredient(randomX, randomY, this.slots[i]);
-            console.log(this.slots[i], randomX, randomY);
+            this.slots.push(new SlotIngredient(randomX, randomY, ing));
+            // console.log(ing, randomX, randomY);
+            randomIng = Math.floor(Math.random() * this.ingredientsTypes.length);
+            ing = this.ingredientsTypes[randomIng];
         }
     }
 

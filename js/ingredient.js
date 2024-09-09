@@ -2,7 +2,6 @@ class Ingredient {
     constructor(x, y, type){
         this.x = x;
         this.y = y;
-        
         this.w = 64;
         this.h = 64;
 
@@ -15,11 +14,8 @@ class Ingredient {
         this.maxSpeed = 5;
         this.negativeForce = 0.99;
 
-        console.log(type);
         this.node = document.createElement("img");
         this.node.src = `../imgs/${type}.png`;
-        // if(placement) this.node.style.filter = "brightness(50%)";
-        // gameBoxNode.querySelector("ul").appendChild(this.node);
         gameBoxNode.appendChild(this.node);
 
         this.node.style.position = "absolute";
