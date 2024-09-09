@@ -7,6 +7,9 @@ class Pizza {
 
         this.ingredientsTypes = ["mushroom", "pepperoni", "onion", "pepper", "bacon", "tomato"];
         this.slots = [];
+        this.ingredientsList = [];
+
+        this.totalIngPlaced = 0;
 
         //Create node
         this.node = document.createElement("img");
@@ -36,26 +39,27 @@ class Pizza {
     };
 
     //Place randomly each slot
-    placeIngredients(total){
+    placeSlots(total){
         //Seleccionamos un ingrediente aleatorio
         let randomIng = Math.floor(Math.random() * this.ingredientsTypes.length);
         let ing = this.ingredientsTypes[randomIng];
-
         for (let i = 0; i < total; i++) {
+            this.ingredientsList.push(ing);
             // console.log(this.node.getBoundingClientRect())
             // Posicion random del slot
             let randomX = Math.floor(Math.random() * (400 - 64)) + this.x+50;
             let randomY = Math.floor(Math.random() * (400 - 64)) + this.y+50;
             this.slots.push(new SlotIngredient(randomX, randomY, ing));
-            // console.log(ing, randomX, randomY);
+
             randomIng = Math.floor(Math.random() * this.ingredientsTypes.length);
             ing = this.ingredientsTypes[randomIng];
         }
+
     }
-
-    //Call when ingredient placed and needs drop new ingredient
-    dropNewIngredient(){
-
+    
+    removePizza(){
+        // ulNode.remove();
+        this.node.remove();
     }
 
     

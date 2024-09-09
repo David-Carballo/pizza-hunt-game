@@ -43,20 +43,21 @@ function startGame(){
 
     //Create current ingredient
     let timeoutId = setTimeout(()=>{
-        currentIngredient = new Ingredient(100, 0, "mushroom"); 
-        clearTimeout(timeoutId)},3000);
+        currentIngredient = new Ingredient(600, 0, pizza.ingredientsList[0]);
+        pizza.ingredientsList.shift() 
+        clearTimeout(timeoutId)}
+    ,3000);
 
+    // Place Slots in Pizza
     timeoutId = setTimeout(()=>{
-        pizza.placeIngredients(4);
-        clearTimeout(timeoutId)},2000);
-    // currentIngredient = new Ingredient(100, 0, "mushroom");
-
+        pizza.placeSlots(2);
+        clearTimeout(timeoutId)}
+    ,2000);
 
     //loop time of game
     timerGame = setInterval(()=>{
         gameLoop();
     }, Math.round(1000/60));
-
 
 };
 
@@ -70,22 +71,30 @@ function gameLoop(){
 
 //Check if currentIngredient placed in slot
 function checkCorrectPlacement() {
-    console.log("space");
-    const slotsNodeList = gameBoxNode.querySelectorAll("#slots-list img");
-
+    let hasCollided = false;
     for (let i = 0; i < pizza.slots.length; i++) {
         let slot = pizza.slots[i];
-        console.log(slot);
-
+        
+        hasCollided = collision(currentIngredient, slot)
         //calcular Area de collision 🟠
-        if(collision(currentIngredient, slot)) {
-            slot.node.style.filter = "";
+        if(hasCollided) {
+            if(slot.correctPlacement(currentIngredient.type)){
+                pizza.totalIngPlaced++;
+                //.style.innerText = PERFECT!
+            };
+            //else .style.innerText = PERFECT!
             currentIngredient.removeIngredient();
             currentIngredient = null;
-
             break;
         }
     }
+
+    //Ingrediente sin colocar 🟠
+    if(!hasCollided){
+        currentIngredient.removeIngredient();
+        currentIngredient = null;
+    }
+    
 }
 
 function collision(ingredient, slot){
@@ -107,8 +116,6 @@ function checkCollisionFloor(){
 }
 
 function gameOver() {
-    resetGameState();
-
     //DOM Game Over
 
     //Change scenes
@@ -118,7 +125,16 @@ function gameOver() {
 }
 
 function resetGameState(){ //🟠
+    //Remove all created nodes
+    document.querySelectorAll("#game-box *:not(p)").forEach((node)=>{node.remove()});
 
+    //Reset all variables
+    pizzaNode = null;
+    pizza = null;
+    currentIngredient = null;
+    clearInterval(timerGame);
+    endViewNode.style.display = "none";
+    startViewNode.style.display = "flex";
 }
 
 
@@ -146,8 +162,30 @@ window.addEventListener("keydown", (event)=>{
         currentIngredient.movement();
     } 
 
-    if(event.key === " ") checkCorrectPlacement();
-    
+    if(event.key === " ") {
+        checkCorrectPlacement();
+
+        if(pizza.ingredientsList.length > 0) {
+            let timerDrop = setTimeout(()=> {
+                currentIngredient = new Ingredient(600, 0, pizza.ingredientsList[0]);
+                pizza.ingredientsList.shift() 
+                clearTimeout(timerDrop);
+            }, 1000);    
+        }
+        else {//Pizza has completed 🟠
+            let h1CompleteNode = document.createElement("h1");
+            if(pizza.totalIngPlaced === pizza.slots.length) h1CompleteNode.innerText = "GOOD JOB";
+            else h1CompleteNode.innerText = "MEC MEC";
+            gameBoxNode.appendChild(h1CompleteNode);
+            h1CompleteNode.style.zIndex = 3;
+            h1CompleteNode.style.position = "absolute";
+            h1CompleteNode.style.left = "400px";
+            h1CompleteNode.style.top = "250px";
+            let timerGameOver = setTimeout(()=> {
+                gameOver();
+            }, 1000);  
+        }
+    }
 });
 
 window.addEventListener("keyup", (event)=>{
