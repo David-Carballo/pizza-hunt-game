@@ -26,8 +26,6 @@ class Pizza {
 
         //Add styles to pizza
         this.setStylePizza();
-        
-        console.log("Pizza creada");
     }
 
     setStylePizza() {
@@ -60,6 +58,7 @@ class Pizza {
         }
     }
 
+    //Place each slots in a circle
     placeSlotsCircle(total){
         this.timePizza = total * 5; //tarda 5s en caer cada ingredient
 
@@ -98,11 +97,13 @@ class Pizza {
         
         let count = 0;
         let interval = setInterval(()=>{
-            timerNode.innerText = "00:" + seconds;
-            if(seconds<=10) timerNode.style.color = "#dc3545"
-            else if(seconds<=20) timerNode.style.color = "#ffeb3b"
-            seconds--;
+            timerNode.innerText = "00:" + seconds.toString().padStart(2, "0");
+            
+            if(seconds<=5) timerNode.style.color = "#dc3545";
+            else if(seconds<=15) timerNode.style.color = "#ffeb3b";
 
+            if (seconds > 0) seconds--;
+            
             if(this.ingredientsList.length === 0) {
                 if(count === 5) {
                     timerNode.innerText = "";
@@ -122,7 +123,7 @@ class Pizza {
     }
     
     removePizza(){
-        // ulNode.remove();
+        // ulNode.remove(); 🔴🔴
         this.node.remove();
     }
 

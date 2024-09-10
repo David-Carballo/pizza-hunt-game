@@ -14,6 +14,8 @@ const resetBtnNode = document.querySelector("#reset-btn");
 const gameBoxNode = document.querySelector("#game-box");
 const timerNode = document.querySelector("#timer");
 const scoreNode = document.querySelector("#score");
+
+let chefNode = null;
 let pizzaNode = null;
 
 
@@ -64,8 +66,9 @@ function startGame(){
 
     // Place Slots in Pizza
     timeoutId = setTimeout(()=>{
-        pizza.placeSlotsCircle(10);
+        pizza.placeSlotsCircle(5);
         pizza.startPizzatime();
+        // addChef();🔵
         clearTimeout(timeoutId)}
     ,2000);
 
@@ -84,7 +87,7 @@ function gameLoop(){
     }
 };
 
-//Check if currentIngredient placed in slot 🟠
+//Check if currentIngredient placed in slot
 function checkCorrectPlacement() {
     let maxSlotArea = 0;
     let slotOnCollision = null;
@@ -136,7 +139,7 @@ function collision(ingredient, slot){
         let widthIntersection = Math.max(ingredient.x, slot.x) - Math.min(ingredient.x + ingredient.w, slot.x + slot.w);
         let heightIntersection = Math.max(ingredient.y, slot.y) - Math.min(ingredient.y + ingredient.h, slot.y + slot.h);
         let area = (widthIntersection*heightIntersection/(slot.w*slot.h)*100);
-        console.log(area);
+
         if(area > 70) return 4;
         else if(area > 50) return 3;
         else if(area > 30) return 2;
@@ -147,21 +150,24 @@ function collision(ingredient, slot){
 
 //Crear texto al colocar ingrediente
 function createTextOnCollision(area){
+    // chefNode.style.animation = "chef 2s";🔵
+
     let h2Node = document.createElement("h2");
-    document.querySelector("ul").appendChild(h2Node);
+    document.querySelector("#slots-list").appendChild(h2Node);
     h2Node.style.position = "absolute";
     h2Node.style.width = "200px";
     h2Node.style.fontSize = "32px";
-    h2Node.style.left = `${500}px`;
-    h2Node.style.top = `${50}px`;   
+    h2Node.style.left = `${25}px`;
+    h2Node.style.top = `${350}px`;   
     h2Node.style.textAlign = "center";
     h2Node.style.webkitTextStroke = "1px white";
+    h2Node.style.zIndex = 4;
 
     // puede colisionar y ser diferente type 🟠
     switch(area){
         case 4:
             h2Node.innerText = "PERFECT";
-            h2Node.style.color = "#28a745";
+            h2Node.style.color = "#28a745"; 
             break;
         case 3:
             h2Node.innerText = "GREAT";
@@ -182,10 +188,10 @@ function createTextOnCollision(area){
     
     }
     h2Node.style.animation = "correct 1.5s";
-    // console.log(h2Node.style.textAlign);
 
     let timerAnimation = setTimeout(()=>{
         h2Node.remove();
+        // chefNode.style.animation = "";🔵
         clearTimeout(timerAnimation)
     }, 1200)
 }
@@ -209,18 +215,25 @@ function checkPizzaCompleted() {
         }, 1000);    
     }
     else {//Pizza has completed 🟠
+        let minimumScore = (100/pizza.slots.length/4) * 2 * pizza.slots.length;
         let h1CompleteNode = document.createElement("h1");
-        if(pizza.totalIngPlaced === pizza.slots.length) h1CompleteNode.innerText = "GOOD JOB";
-        else h1CompleteNode.innerText = "MEC MEC";
+        if(pizza.scorePizza >= minimumScore) h1CompleteNode.innerText = "GOOD JOB";
+        else {
+            h1CompleteNode.innerText = "Do Better";
+            h1CompleteNode.style.color = "darkred";
+        }
         gameBoxNode.appendChild(h1CompleteNode);
         h1CompleteNode.style.zIndex = 3;
         h1CompleteNode.style.position = "absolute";
-        h1CompleteNode.style.left = "400px";
+        h1CompleteNode.style.width = "200px";
+        h1CompleteNode.style.left = "50%";
         h1CompleteNode.style.top = "250px";
+        h1CompleteNode.style.fontSize ="80px";
+
         let timerGameOver = setTimeout(()=> {
             gameOver();
             clearTimeout(timerGameOver);
-        }, 1000);  
+        }, 2000);  
     }
 }
 
@@ -247,6 +260,16 @@ function resetGameState(){ //🟠
     clearInterval(timerGame);
     endViewNode.style.display = "none";
     startViewNode.style.display = "flex";
+}
+
+function addChef() {
+    chefNode = document.createElement("img");
+    chefNode.src = "../imgs/pizzero1.png";
+    gameBoxNode.append(chefNode);
+    chefNode.style.position = "relative";
+    chefNode.style.zIndex = 3;
+    chefNode.style.top = "-150px";
+    chefNode.style.left = "-190px";
 }
 
 

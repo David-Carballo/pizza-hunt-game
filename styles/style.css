@@ -79,12 +79,22 @@ h1 {
     align-self: center;
 }
 
+#hearts{
+    list-style: none;
+    position: relative;
+    margin-top: 10px;
+    margin-bottom: 9px;
+    padding: 0px;
+    align-self: end;
+    left: -120px;
+    top: 2px;
+}
+
 #game-box{
     background-image: url(../imgs/mantel.png);
     align-self: center;
     width: 900px;
     height: 675px;
-    margin: 20px;
     border-radius: 10px;
 
     user-select: none;
@@ -94,7 +104,7 @@ h1 {
 }
 
 #game-box p {
-    color: white;
+    color: black;
     font-size: 40px;
     -webkit-text-stroke: 1px black;
     z-index: 3;
@@ -113,8 +123,19 @@ h1 {
 }
 
 #game-scene, #end-scene {
+    background-image: url(../imgs/game-scene.png);
     display: none;
+    flex-direction: column;
     animation: show 2s;
+}
+
+#game-scene {
+    justify-content: stretch;    
+}
+
+#end-scene h1{
+    font-size: 50px;
+    
 }
 
 @keyframes show {
@@ -133,10 +154,11 @@ h1 {
     40%   { font-size: 40px; opacity: 1; }
     60%   { font-size: 40px; opacity: 1; }
     100%  { font-size: 40px; opacity: 0; }
-  }
+}
   
-
-#end-scene h1{
-    font-size: 50px;
-    
+@keyframes chef {
+    0%     { content: url(../imgs/pizzero1.png); }
+    33%    { content: url(../imgs/pizzero2.png); }
+    66%    { content: url(../imgs/pizzero3.png); }
+    100%   { content: url(../imgs/pizzero4.png); }
 }
