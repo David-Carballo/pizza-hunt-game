@@ -86,29 +86,67 @@ function gameLoop(){
 
 //Check if currentIngredient placed in slot 🟠
 function checkCorrectPlacement() {
-    let hasCollided = -1;
-    
-    for (let i = 0; i < pizza.slots.length; i++) {
-        let slot = pizza.slots[i];
+    let maxSlotArea = 0;
+    let slotOnCollision = null;
+
+    let newSlots = pizza.slots.filter((slot)=>{
+        if( slot.correctType(currentIngredient.type) &&
+            collision(currentIngredient, slot) && 
+            !slot.active
+        ) return slot;
+    })
+
+    if(newSlots.length>0){
+        //Ingrediente mas cercano
+        maxSlotArea = collision(currentIngredient, newSlots[0]);
+        slotOnCollision = newSlots[0];
         
-        hasCollided = collision(currentIngredient, slot)
-        
-        if(hasCollided) {
-            if(slot.correctPlacement(currentIngredient.type)){
-                pizza.totalIngPlaced++;
-            };
-            //else .style.innerText = PERFECT!
-            currentIngredient.removeIngredient();
-            currentIngredient = null;
-            break;
+        for (let i = 1; i < newSlots.length; i++) {
+            let slotArea = collision(currentIngredient, newSlots[i]);
+            if(slotArea > maxSlotArea) {
+                maxSlotArea = slotArea;
+                slotOnCollision = newSlots[i];
+            }
         }
     }
 
-    if(!hasCollided){
+    if(maxSlotArea) {
+        pizza.totalIngPlaced++;
+        slotOnCollision.setPlaced();
+        currentIngredient.removeIngredient();
+        currentIngredient = null;
+    }
+    else{
         currentIngredient.removeIngredient();
         currentIngredient = null;
     }
 
+    pizza.setScore(maxSlotArea);
+    createTextOnCollision(maxSlotArea);
+
+}
+
+//Return truthy area
+function collision(ingredient, slot){
+    if (ingredient.x < slot.x + slot.w &&
+        ingredient.x + ingredient.w > slot.x &&
+        ingredient.y < slot.y + slot.h &&
+        ingredient.y + ingredient.h > slot.y
+    ) {
+        let widthIntersection = Math.max(ingredient.x, slot.x) - Math.min(ingredient.x + ingredient.w, slot.x + slot.w);
+        let heightIntersection = Math.max(ingredient.y, slot.y) - Math.min(ingredient.y + ingredient.h, slot.y + slot.h);
+        let area = (widthIntersection*heightIntersection/(slot.w*slot.h)*100);
+        console.log(area);
+        if(area > 70) return 4;
+        else if(area > 50) return 3;
+        else if(area > 30) return 2;
+        else return 1;
+    }
+    else return 0;
+}
+
+//Crear texto al colocar ingrediente
+function createTextOnCollision(area){
     let h2Node = document.createElement("h2");
     document.querySelector("ul").appendChild(h2Node);
     h2Node.style.position = "absolute";
@@ -120,14 +158,14 @@ function checkCorrectPlacement() {
     h2Node.style.webkitTextStroke = "1px white";
 
     // puede colisionar y ser diferente type 🟠
-    switch(hasCollided){
+    switch(area){
         case 4:
             h2Node.innerText = "PERFECT";
             h2Node.style.color = "#28a745";
             break;
         case 3:
             h2Node.innerText = "GREAT";
-            h2Node.style.color = "#ffd700";
+            h2Node.style.color = "#00BCD4";
             break;
         case 2:
             h2Node.innerText = "GOOD";
@@ -150,27 +188,6 @@ function checkCorrectPlacement() {
         h2Node.remove();
         clearTimeout(timerAnimation)
     }, 1200)
-
-    
-}
-
-//Return truthy area
-function collision(ingredient, slot){
-    if (ingredient.x < slot.x + slot.w &&
-        ingredient.x + ingredient.w > slot.x &&
-        ingredient.y < slot.y + slot.h &&
-        ingredient.y + ingredient.h > slot.y
-    ) {
-        let widthIntersection = Math.max(ingredient.x, slot.x) - Math.min(ingredient.x + ingredient.w, slot.x + slot.w);
-        let heightIntersection = Math.max(ingredient.y, slot.y) - Math.min(ingredient.y + ingredient.h, slot.y + slot.h);
-        let area = (widthIntersection*heightIntersection/(slot.w*slot.h)*100);
-
-        if(area > 70) return 4;
-        else if(area > 50) return 3;
-        else if(area > 35) return 2;
-        else return 1;
-    }
-    else return 0;
 }
 
 //Check if currentIngredient collision with Floor
@@ -182,6 +199,7 @@ function checkCollisionFloor(){
     }
 }
 
+//Check if all ingredients has been placed
 function checkPizzaCompleted() {
     if(pizza.ingredientsList.length > 0) {
         let timerDrop = setTimeout(()=> {
@@ -220,7 +238,8 @@ function resetGameState(){ //🟠
     //Remove all created nodes
     document.querySelectorAll("#game-box *:not(p)").forEach((node)=>{node.remove()});
     timerNode.innerText = "";
-    timerNode.color = "white";
+    timerNode.style.color = "white";
+    scoreNode.innerText = "Score: 0 %"
     //Reset all variables
     pizzaNode = null;
     pizza = null;

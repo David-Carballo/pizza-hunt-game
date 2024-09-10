@@ -12,7 +12,8 @@ class Pizza {
         this.totalIngPlaced = 0;
 
         this.timePizza = 0;
-
+        this.scorePizza = 0;
+        scoreNode.innerText = "Score:" + this.scorePizza + " %";
         //Create node
         this.node = document.createElement("img");
         gameBoxNode.appendChild(this.node);
@@ -98,8 +99,8 @@ class Pizza {
         let count = 0;
         let interval = setInterval(()=>{
             timerNode.innerText = "00:" + seconds;
-            if(seconds<=20) timerNode.style.color = "#ffeb3b"
-            else if(seconds<=10) timerNode.style.color = "#ffeb3b"
+            if(seconds<=10) timerNode.style.color = "#dc3545"
+            else if(seconds<=20) timerNode.style.color = "#ffeb3b"
             seconds--;
 
             if(this.ingredientsList.length === 0) {
@@ -110,6 +111,14 @@ class Pizza {
                 count++;
             }
         },1000);
+    }
+
+    
+    setScore(areaCollison){ //Mejorar puntuaciones🟠
+        let score = 100/this.slots.length/4;
+        
+        this.scorePizza = Math.floor(this.scorePizza + score*areaCollison);
+        scoreNode.innerText = "Score:" + this.scorePizza + " %";
     }
     
     removePizza(){

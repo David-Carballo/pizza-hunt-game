@@ -6,6 +6,8 @@ class SlotIngredient {
         this.w = 64;
         this.h = 64;
 
+        this.active = false;
+
         this.type = type;
         this.computeSize();
 
@@ -48,12 +50,18 @@ class SlotIngredient {
     }
 
     //Change filter when ingredient is place
-    correctPlacement(type){
+    correctType(type){
         if(type === this.type){
-            this.node.style.filter = "";
             return true;
         }
         return false;
     }
+
+    setPlaced(){
+        this.node.style.filter = "";
+        this.active = true;
+    }
+
+
     
 }
