@@ -5,7 +5,7 @@ class Pizza {
         this.w = 500;
         this.h = 500;
 
-        this.ingredientsTypes = ["mushroom", "pepperoni", "onion", "pepper", "bacon", "tomato"];
+        this.ingredientsTypes = ["cheese","mushroom", "olive", "pepperoni", "onion", "pepper", "bacon", "tomato"];
         this.slots = [];
         this.ingredientsList = [];
 

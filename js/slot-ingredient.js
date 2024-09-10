@@ -22,6 +22,7 @@ class SlotIngredient {
                 this.w = 96;
                 this.h = 32;
                 break;
+            case "olive":
             case "mushroom":
             case "pepper":
                 this.w = 48;

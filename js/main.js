@@ -9,11 +9,15 @@ const endViewNode = document.querySelector("#end-scene");
 //Buttons
 const startBtnNode = document.querySelector("#start-btn");
 const resetBtnNode = document.querySelector("#reset-btn");
+const audioBtnNode = document.querySelector("#audio-btn");
 
 ///Nodes
 const gameBoxNode = document.querySelector("#game-box");
 const timerNode = document.querySelector("#timer");
 const scoreNode = document.querySelector("#score");
+
+//Audios
+const audioElement = new Audio("../audio/roma-italian.mp3");
 
 let chefNode = null;
 let pizzaNode = null;
@@ -22,7 +26,7 @@ let pizzaNode = null;
 /**
  * * VARIABLES GLOBALES
 */
-
+let audioOn = true;
 let timerGame = null;
 let pizza = null;
 let currentIngredient = null;
@@ -41,6 +45,11 @@ function startGame(){
     //Change scenes
     startViewNode.style.display = "none";
     gameViewNode.style.display = "flex";
+
+    //Iniciar audio
+    audioElement.loop = true;
+    audioElement.play();
+    audioElement.volume = 0.05;
     
     //Entrada pala madera
     let palaNode = document.createElement("img");
@@ -68,7 +77,7 @@ function startGame(){
     timeoutId = setTimeout(()=>{
         pizza.placeSlotsCircle(5);
         pizza.startPizzatime();
-        // addChef();🔵
+        addChef(); //🔵
         clearTimeout(timeoutId)}
     ,2000);
 
@@ -150,7 +159,7 @@ function collision(ingredient, slot){
 
 //Crear texto al colocar ingrediente
 function createTextOnCollision(area){
-    // chefNode.style.animation = "chef 2s";🔵
+    chefNode.style.animation = "chef 2s"; //🔵
 
     let h2Node = document.createElement("h2");
     document.querySelector("#slots-list").appendChild(h2Node);
@@ -191,7 +200,7 @@ function createTextOnCollision(area){
 
     let timerAnimation = setTimeout(()=>{
         h2Node.remove();
-        // chefNode.style.animation = "";🔵
+        chefNode.style.animation = ""; //🔵
         clearTimeout(timerAnimation)
     }, 1200)
 }
@@ -272,6 +281,19 @@ function addChef() {
     chefNode.style.left = "-190px";
 }
 
+function audioState(){
+    if(audioOn) {
+        audioBtnNode.style.backgroundImage = "url(../imgs/audio_off.png)";
+        audioElement.muted = true;
+
+    }
+    else {
+        audioBtnNode.style.backgroundImage = "url(../imgs/audio_on.png)";
+        audioElement.muted = false;
+    }
+    audioOn = !audioOn;
+}
+
 
 /**
  * * EVENT LISTENERS
@@ -279,6 +301,7 @@ function addChef() {
 
 startBtnNode.addEventListener("click", startGame);
 resetBtnNode.addEventListener("click", resetGameState);
+audioBtnNode.addEventListener("click", audioState);
 
 window.addEventListener("keydown", (event)=>{
     if(event.key === "a" && !keyLeft && currentIngredient)  {
