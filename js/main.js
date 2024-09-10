@@ -12,6 +12,8 @@ const resetBtnNode = document.querySelector("#reset-btn");
 
 ///Nodes
 const gameBoxNode = document.querySelector("#game-box");
+const timerNode = document.querySelector("#timer");
+const scoreNode = document.querySelector("#score");
 let pizzaNode = null;
 
 
@@ -63,6 +65,7 @@ function startGame(){
     // Place Slots in Pizza
     timeoutId = setTimeout(()=>{
         pizza.placeSlotsCircle(10);
+        pizza.startPizzatime();
         clearTimeout(timeoutId)}
     ,2000);
 
@@ -81,7 +84,7 @@ function gameLoop(){
     }
 };
 
-//Check if currentIngredient placed in slot
+//Check if currentIngredient placed in slot 🟠
 function checkCorrectPlacement() {
     let hasCollided = -1;
     
@@ -140,13 +143,13 @@ function checkCorrectPlacement() {
             break;
     
     }
-    h2Node.style.animation = "correct 2s";
+    h2Node.style.animation = "correct 1.5s";
     // console.log(h2Node.style.textAlign);
 
     let timerAnimation = setTimeout(()=>{
         h2Node.remove();
         clearTimeout(timerAnimation)
-    }, 1880)
+    }, 1200)
 
     
 }
@@ -198,12 +201,14 @@ function checkPizzaCompleted() {
         h1CompleteNode.style.top = "250px";
         let timerGameOver = setTimeout(()=> {
             gameOver();
+            clearTimeout(timerGameOver);
         }, 1000);  
     }
 }
 
-function gameOver() {
+function gameOver() { //🟠
     //DOM Game Over
+    
 
     //Change scenes
     gameViewNode.style.display = "none";
@@ -214,7 +219,8 @@ function gameOver() {
 function resetGameState(){ //🟠
     //Remove all created nodes
     document.querySelectorAll("#game-box *:not(p)").forEach((node)=>{node.remove()});
-
+    timerNode.innerText = "";
+    timerNode.color = "white";
     //Reset all variables
     pizzaNode = null;
     pizza = null;

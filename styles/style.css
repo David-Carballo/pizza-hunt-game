@@ -95,20 +95,20 @@ h1 {
 
 #game-box p {
     color: white;
-    font-size: 30px;
+    font-size: 40px;
     -webkit-text-stroke: 1px black;
     z-index: 3;
 }
 
 #timer {
     position: absolute;
-    left: 50px;
+    left: 750px;
     top: 0px;
 }
 
 #score {
     position: absolute;
-    left: 700px;
+    left: 50px;
     top: 0px;
 }
 
@@ -130,9 +130,9 @@ h1 {
 
 @keyframes correct {
     0%    { font-size: 30px; opacity: 0; }
-    40%   { font-size: 50px; opacity: 1; }
-    60%   { font-size: 50px; opacity: 1; }
-    100%  { font-size: 50px; opacity: 0; }
+    40%   { font-size: 40px; opacity: 1; }
+    60%   { font-size: 40px; opacity: 1; }
+    100%  { font-size: 40px; opacity: 0; }
   }
   
 

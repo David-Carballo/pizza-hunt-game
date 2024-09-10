@@ -11,6 +11,8 @@ class Pizza {
 
         this.totalIngPlaced = 0;
 
+        this.timePizza = 0;
+
         //Create node
         this.node = document.createElement("img");
         gameBoxNode.appendChild(this.node);
@@ -23,8 +25,6 @@ class Pizza {
 
         //Add styles to pizza
         this.setStylePizza();
-
-        
         
         console.log("Pizza creada");
     }
@@ -42,6 +42,7 @@ class Pizza {
 
     //Place randomly each slot
     placeSlots(total){
+        this.timePizza = total * 5; //tarda 5s en caer cada ingredient
         //Seleccionamos un ingrediente aleatorio
         let randomIng = Math.floor(Math.random() * this.ingredientsTypes.length);
         let ing = this.ingredientsTypes[randomIng];
@@ -59,6 +60,8 @@ class Pizza {
     }
 
     placeSlotsCircle(total){
+        this.timePizza = total * 5; //tarda 5s en caer cada ingredient
+
         //Seleccionamos un ingrediente aleatorio
         let randomIng = Math.floor(Math.random() * this.ingredientsTypes.length);
         let ing = this.ingredientsTypes[randomIng];
@@ -87,6 +90,26 @@ class Pizza {
         this.ingredientsList.push(ing);
         this.slots.push(new SlotIngredient(x-32, y-32, ing));
 
+    }
+
+    startPizzatime(){
+        let seconds = this.timePizza;
+        
+        let count = 0;
+        let interval = setInterval(()=>{
+            timerNode.innerText = "00:" + seconds;
+            if(seconds<=20) timerNode.style.color = "#ffeb3b"
+            else if(seconds<=10) timerNode.style.color = "#ffeb3b"
+            seconds--;
+
+            if(this.ingredientsList.length === 0) {
+                if(count === 5) {
+                    timerNode.innerText = "";
+                    clearInterval(interval);
+                }
+                count++;
+            }
+        },1000);
     }
     
     removePizza(){
