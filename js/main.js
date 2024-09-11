@@ -32,6 +32,11 @@ let pizza = null;
 let currentIngredient = null;
 let lifes = 3;
 
+let totalScore = 0;
+let pizzaFinished = false;
+
+let gravity = 0.25;
+let totalSlots = 7;
 
 let keyDown = null;
 let keyLeft = null;
@@ -78,7 +83,7 @@ function startGame(){
 
     // Place Slots in Pizza
     timeoutId = setTimeout(()=>{
-        pizza.placeSlotsCircle(5);
+        pizza.placeSlotsCircle(totalSlots);
         pizza.startPizzaTime();
         pizza.node.style.animation = "";
         addChef(); //🔵
@@ -229,30 +234,36 @@ function checkPizzaCompleted() {
             clearTimeout(timerDrop);
         }, 1000);    
     }
-    else if(lifes === 0){
-        let timerGameOver = setTimeout(()=> {
-            pizza.stopPizzaTime();
-            gameOver();
-            clearTimeout(timerGameOver);
-        }, 2000);  
-    }
-    else { 
-        takeCompletedPizza();
-        let minimumScore = (100/pizza.slots.length/4) * 2 * pizza.slots.length;
+    else{
+        totalScore += (pizza.scorePizza + pizza.timePizza); 
 
-        let h1CompleteNode = document.createElement("h1");
+        let minimumScore = (100/pizza.slots.length/4) * 2 * pizza.slots.length;
+        if(pizza.scorePizza < minimumScore && lifes > 0) updateLifes();//Pizza mal completada
+
+        if(lifes === 0){
+            let timerGameOver = setTimeout(()=> {
+                pizza.stopPizzaTime();
+                gameOver();
+                clearTimeout(timerGameOver);
+            }, 2000);  
+        }
+        else takeCompletedPizza();
+
+        // let h1CompleteNode = document.createElement("h1");
+
         // if(pizza.scorePizza >= minimumScore) h1CompleteNode.innerText = "GOOD JOB";
         // else {
         //     h1CompleteNode.innerText = "Do Better";
         //     h1CompleteNode.style.color = "darkred";
         // }
-        gameBoxNode.appendChild(h1CompleteNode);
-        h1CompleteNode.style.zIndex = 3;
-        h1CompleteNode.style.position = "absolute";
-        h1CompleteNode.style.width = "200px";
-        h1CompleteNode.style.left = "50%";
-        h1CompleteNode.style.top = "250px";
-        h1CompleteNode.style.fontSize ="80px";
+
+        // gameBoxNode.appendChild(h1CompleteNode);
+        // h1CompleteNode.style.zIndex = 3;
+        // h1CompleteNode.style.position = "absolute";
+        // h1CompleteNode.style.width = "200px";
+        // h1CompleteNode.style.left = "50%";
+        // h1CompleteNode.style.top = "250px";
+        // h1CompleteNode.style.fontSize ="80px";
 
         // let timerGameOver = setTimeout(()=> {
         //     pizza.stopPizzaTime();
@@ -307,6 +318,10 @@ function dropNewPizza(){
        palaNode.style.position ="absolute";
        palaNode.style.top ="100px";
        palaNode.style.left ="-891px";
+
+       //Difficulty
+        if(gravity <= 0.5) gravity *= 1.1;
+        if(totalSlots < 15); totalSlots++;
    
        //Create first pizza
        pizza = new Pizza();
@@ -321,7 +336,7 @@ function dropNewPizza(){
    
        // Place Slots in Pizza
        timeoutId = setTimeout(()=>{
-           pizza.placeSlotsCircle(5);
+           pizza.placeSlotsCircle(totalSlots);
            pizza.startPizzaTime();
            pizza.node.style.animation = "";
            addChef(); //🔵
@@ -333,7 +348,6 @@ function dropNewPizza(){
 //Update lifes when collison or bad pizza
 function updateLifes(){
     lifes--;
-    console.log(lifes)
     let heartsNodeList = document.querySelectorAll("#hearts img");
     if(lifes === 2) heartsNodeList[0].src = "imgs/heart_empty.png";
     else if (lifes === 1) heartsNodeList[1].src = "imgs/heart_empty.png";
@@ -344,7 +358,8 @@ function updateLifes(){
 function gameOver() { //🟠
     audioElement.muted = true;
     //DOM Game Over
-
+    let scoreEndNode = document.querySelector("#end-score");
+    scoreEndNode.innerText = `Total Score : ${totalScore}`;
     //Change scenes
     gameViewNode.style.display = "none";
     endViewNode.style.display = "flex"

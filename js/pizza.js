@@ -96,7 +96,6 @@ class Pizza {
 
     startPizzaTime(){
         let seconds = this.timePizza;
-        
         let count = 0;
         this.intervalId = setInterval(()=>{
             timerNode.innerText = "00:" + seconds.toString().padStart(2, "0");
@@ -104,7 +103,10 @@ class Pizza {
             if(seconds<=5) timerNode.style.color = "#dc3545";
             else if(seconds<=15) timerNode.style.color = "#ffeb3b";
 
-            if (seconds > 0) seconds--;
+            if (seconds > 0) {
+                seconds--;
+                this.timePizza--;
+            }
             
             if(this.ingredientsList.length === 0) {
                 if(count === 5) {
@@ -117,6 +119,7 @@ class Pizza {
 
     stopPizzaTime(){
         timerNode.innerText = "";
+        timerNode.style.color = "black";
         clearInterval(this.intervalId);
     }
 

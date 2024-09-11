@@ -9,7 +9,7 @@ class Ingredient {
         this.computeSize();
 
         //Velocidades
-        this.gravityAcc = 0.2;
+        this.gravityAcc = gravity;
         this.speedX = 0;
         this.speedY = 0;
         this.maxSpeed = 5;
