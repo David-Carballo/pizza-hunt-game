@@ -12,6 +12,7 @@ class Pizza {
         this.totalIngPlaced = 0;
 
         this.timePizza = 0;
+        this.intervalId = null;
         this.scorePizza = 0;
         scoreNode.innerText = "Score:" + this.scorePizza + " %";
         //Create node
@@ -92,11 +93,11 @@ class Pizza {
 
     }
 
-    startPizzatime(){
+    startPizzaTime(){
         let seconds = this.timePizza;
         
         let count = 0;
-        let interval = setInterval(()=>{
+        this.intervalId = setInterval(()=>{
             timerNode.innerText = "00:" + seconds.toString().padStart(2, "0");
             
             if(seconds<=5) timerNode.style.color = "#dc3545";
@@ -106,12 +107,16 @@ class Pizza {
             
             if(this.ingredientsList.length === 0) {
                 if(count === 5) {
-                    timerNode.innerText = "";
-                    clearInterval(interval);
+                    this.stopPizzaTime();
                 }
                 count++;
             }
         },1000);
+    }
+
+    stopPizzaTime(){
+        timerNode.innerText = "";
+        clearInterval(this.intervalId);
     }
 
     
