@@ -45,7 +45,7 @@ class SlotIngredient {
         this.node.style.height = `${this.h}px`;
         this.node.style.zIndex = 1;
 
-        this.node.src = `../imgs/${this.type}.png`;
+        this.node.src = `imgs/${this.type}.png`;
         this.node.style.filter = "brightness(30%)";
         this.node.style.position = "absolute";
     }

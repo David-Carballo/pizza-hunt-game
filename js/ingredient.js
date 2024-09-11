@@ -16,7 +16,7 @@ class Ingredient {
         this.negativeForce = 0.99;
 
         this.node = document.createElement("img");
-        this.node.src = `../imgs/${type}.png`;
+        this.node.src = `imgs/${type}.png`;
         gameBoxNode.appendChild(this.node);
 
         this.node.style.position = "absolute";

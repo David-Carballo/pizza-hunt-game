@@ -17,7 +17,7 @@ const timerNode = document.querySelector("#timer");
 const scoreNode = document.querySelector("#score");
 
 //Audios
-const audioElement = new Audio("../audio/roma-italian.mp3");
+const audioElement = new Audio("audio/roma-italian.mp3");
 
 let chefNode = null;
 let pizzaNode = null;
@@ -273,7 +273,7 @@ function resetGameState(){ //🟠
 
 function addChef() {
     chefNode = document.createElement("img");
-    chefNode.src = "../imgs/pizzero1.png";
+    chefNode.src = "imgs/pizzero1.png";
     gameBoxNode.append(chefNode);
     chefNode.style.position = "relative";
     chefNode.style.zIndex = 3;
@@ -283,12 +283,12 @@ function addChef() {
 
 function audioState(){
     if(audioOn) {
-        audioBtnNode.style.backgroundImage = "url(../imgs/audio_off.png)";
+        audioBtnNode.style.backgroundImage = "url(imgs/audio_off.png)";
         audioElement.muted = true;
 
     }
     else {
-        audioBtnNode.style.backgroundImage = "url(../imgs/audio_on.png)";
+        audioBtnNode.style.backgroundImage = "url(imgs/audio_on.png)";
         audioElement.muted = false;
     }
     audioOn = !audioOn;
