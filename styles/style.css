@@ -29,7 +29,7 @@ body {
 }
 
 #start-scene {
-    background-image: url("imgs/background.png");
+    background-image: url("../imgs/background.png");
     background-position: center;
     background-size: cover;
 }
@@ -94,7 +94,7 @@ h1 {
 }
 
 #audio-btn{
-    background-image: url(imgs/audio_on.png);
+    background-image: url("../imgs/audio_on.png");
     position: relative;
     padding: 0;
     margin: 0;
@@ -108,7 +108,7 @@ h1 {
 }
 
 #game-box{
-    background-image: url(imgs/mantel.png);
+    background-image: url("../imgs/mantel.png");
     align-self: center;
     width: 900px;
     height: 675px;
@@ -140,7 +140,7 @@ h1 {
 }
 
 #game-scene, #end-scene {
-    background-image: url(imgs/game-scene.png);
+    background-image: url("../imgs/game-scene.png");
     display: none;
     flex-direction: column;
     animation: show 2s;
@@ -175,8 +175,8 @@ h1 {
 }
   
 @keyframes chef {
-    0%     { content: url(imgs/pizzero1.png); }
-    33%    { content: url(imgs/pizzero2.png); }
-    66%    { content: url(imgs/pizzero3.png); }
-    100%   { content: url(imgs/pizzero4.png); }
+    0%     { content: url("../imgs/pizzero1.png"); }
+    66%    { content: url("../imgs/pizzero3.png"); }
+    100%   { content: url("../imgs/pizzero4.png"); }
+    33%    { content: url("../imgs/pizzero2.png"); }
 }
