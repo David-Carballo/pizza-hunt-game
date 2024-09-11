@@ -29,7 +29,7 @@ class Pizza {
     }
 
     setStylePizza() {
-        this.node.src ="../imgs/pizza.png";
+        this.node.src ="imgs/pizza.png";
         this.node.style.position = "relative";
         this.node.style.width = `${this.w}px`;
         this.node.style.height = `${this.h}px`;

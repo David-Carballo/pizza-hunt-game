@@ -53,7 +53,7 @@ function startGame(){
     
     //Entrada pala madera
     let palaNode = document.createElement("img");
-    palaNode.src = "../imgs/pala.png";
+    palaNode.src = "imgs/pala.png";
     gameBoxNode.appendChild(palaNode);
     palaNode.style.animation = ("show2 3s");
     palaNode.style.zIndex = 0.5;
