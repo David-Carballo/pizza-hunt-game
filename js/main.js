@@ -17,7 +17,13 @@ const timerNode = document.querySelector("#timer");
 const scoreNode = document.querySelector("#score");
 
 //Audios
-const audioElement = new Audio("audio/roma-italian.mp3");
+const globalAudio = new Audio("audio/roma-italian.mp3");
+const placeAudio = new Audio("audio/place_ing.mp3");
+const errorAudio = new Audio("audio/error.mp3");
+const gameoverAudio = new Audio("audio/final_game.mp3");
+const startAudio = new Audio("audio/start_button_door.mp3");
+const palaAudio = new Audio("audio/take_pizza.mp3");
+const newPizzaAudio = new Audio("audio/time_new_pizza.mp3");
 
 let chefNode = null;
 let pizzaNode = null;
@@ -47,17 +53,23 @@ let keyRight = null;
 */
 
 function startGame(){
-
+    startAudio.currentTime = 0;
+    startAudio.volume = 0.2;
+    startAudio.play();
     //Change scenes
     startViewNode.style.display = "none";
     gameViewNode.style.display = "flex";
 
     //Iniciar audio
-    audioElement.loop = true;
-    audioElement.currentTime = 0;
-    audioElement.muted = false;
-    audioElement.play();
-    audioElement.volume = 0.05;
+    
+    let audioTime = setTimeout(()=>{
+        globalAudio.loop = true;
+        globalAudio.currentTime = 0;
+        globalAudio.muted = false;
+        globalAudio.play();
+        globalAudio.volume = 0.03;
+        clearTimeout(audioTime);
+    },1000);
     
     //Entrada pala madera
     let palaNode = document.createElement("img");
@@ -185,6 +197,7 @@ function createTextOnCollision(area){
     // puede colisionar y ser diferente type 🟠
     switch(area){
         case 4:
+
             h2Node.innerText = "PERFECT";
             h2Node.style.color = "#28a745";
             chefNode.style.filter = "brightness(1.15)"
@@ -245,6 +258,9 @@ function checkPizzaCompleted() {
 
         if(lifes === 0){
             gameBoxNode.style.filter = "saturate(0%)"
+            gameoverAudio.volume = 0.3;
+            gameoverAudio.currentTime = 0;
+            gameoverAudio.play();
             let timerGameOver = setTimeout(()=> {
                 pizza.stopPizzaTime();
                 gameOver();
@@ -266,6 +282,9 @@ function takeCompletedPizza(){
     palaNode.style.top ="100px";
     palaNode.style.left ="-891px";
 
+    palaAudio.volume = 0.2;
+    palaAudio.currentTime = 0;
+    palaAudio.play();
     pizzaNode.style.animation = ("show-pizza 0.6s ease-in 2s reverse");
     pizza.slots.forEach((slot)=>{
         slot.node.style.left = "-200px";
@@ -282,6 +301,9 @@ function takeCompletedPizza(){
         pizzaNode = null;
         let timerDrop = setTimeout(()=>{
             dropNewPizza();
+            palaAudio.volume = 0.2;
+            palaAudio.currentTime = 0;
+            palaAudio.play();
             clearTimeout(timerDrop);
         } ,800);
         clearTimeout(timerOut);
@@ -307,7 +329,9 @@ function dropNewPizza(){
    
        //Create first pizza
        pizza = new Pizza();
-   
+       newPizzaAudio.volume = 0.4;
+       newPizzaAudio.currentTime = 0;
+       newPizzaAudio.play();
        //Create current ingredient
        let timeoutId = setTimeout(()=>{
            currentIngredient = new Ingredient(600, 0, pizza.ingredientsList[0]);
@@ -330,6 +354,9 @@ function dropNewPizza(){
 //Update lifes when collison or bad pizza
 function updateLifes(){
     lifes--;
+    errorAudio.volume = 0.3;
+    errorAudio.currentTime = 0;
+    errorAudio.play();
     let heartsNodeList = document.querySelectorAll("#hearts img");
     if(lifes === 2) heartsNodeList[0].src = "imgs/heart_empty.png";
     else if (lifes === 1) heartsNodeList[1].src = "imgs/heart_empty.png";
@@ -338,7 +365,7 @@ function updateLifes(){
 }
 
 function gameOver() { //🟠
-    audioElement.muted = true;
+    globalAudio.muted = true;
     //DOM Game Over
     let scoreEndNode = document.querySelector("#end-score");
     scoreEndNode.innerText = `Total Score : ${totalScore}`;
@@ -389,12 +416,12 @@ function addChef() {
 function audioState(){
     if(audioOn) {
         audioBtnNode.style.backgroundImage = "url(imgs/audio_off.png)";
-        audioElement.muted = true;
+        globalAudio.muted = true;
 
     }
     else {
         audioBtnNode.style.backgroundImage = "url(imgs/audio_on.png)";
-        audioElement.muted = false;
+        globalAudio.muted = false;
     }
     audioOn = !audioOn;
 }
@@ -426,6 +453,9 @@ window.addEventListener("keydown", (event)=>{
     } 
 
     if(event.key === " ") {
+        placeAudio.volume = 0.1;
+        placeAudio.currentTime = 0;
+        placeAudio.play();
         checkCorrectPlacement();
         checkPizzaCompleted();
     }
