@@ -49,6 +49,8 @@ function startGame(){
 
     //Iniciar audio
     audioElement.loop = true;
+    audioElement.currentTime = 0;
+    audioElement.muted = false;
     audioElement.play();
     audioElement.volume = 0.05;
     
@@ -288,6 +290,9 @@ function resetGameState(){ //🟠
     pizzaNode = null;
     pizza = null;
     currentIngredient = null;
+
+    audioBtnNode.style.backgroundImage = "url(imgs/audio_on.png)";
+    audioOn = true;
 
     clearInterval(timerGame);
     timerGame = null;
