@@ -14,6 +14,7 @@ body {
     display: flex;
     justify-content: center;
     font-family: "Lilita One";
+    /* overflow: hidden; */
 }
 
 .container {
@@ -122,7 +123,7 @@ h1 {
 
 #game-box p {
     color: black;
-    font-size: 40px;
+    font-size: 32px;
     -webkit-text-stroke: 1px black;
     z-index: 3;
 }
@@ -167,15 +168,20 @@ h1 {
     padding: 20px;
 }
 
-@keyframes show {
+@keyframes show-pizza {
     0% {left: -500px;}
     100% {left: 300px;}
 }
 
-@keyframes show2 {
+@keyframes show-pala {
     0% {left: -891px;}
-    65% {left: -100px;}
+    65% {left: -80px;}
     100% {left: -891px;}
+}
+
+@keyframes ingredients-out {
+    0% {left: 0px;}
+    100% {left: -500px;}
 }
 
 @keyframes correct {

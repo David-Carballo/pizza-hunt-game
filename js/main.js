@@ -58,7 +58,7 @@ function startGame(){
     let palaNode = document.createElement("img");
     palaNode.src = "imgs/pala.png";
     gameBoxNode.appendChild(palaNode);
-    palaNode.style.animation = ("show2 3s");
+    palaNode.style.animation = ("show-pala 3s");
     palaNode.style.zIndex = 0.5;
     palaNode.style.position ="absolute";
     palaNode.style.top ="100px";
@@ -80,6 +80,7 @@ function startGame(){
     timeoutId = setTimeout(()=>{
         pizza.placeSlotsCircle(5);
         pizza.startPizzaTime();
+        pizza.node.style.animation = "";
         addChef(); //🔵
         clearTimeout(timeoutId)}
     ,2000);
@@ -221,22 +222,30 @@ function checkCollisionFloor(){
 
 //Check if all ingredients has been placed
 function checkPizzaCompleted() {
-    if(pizza.ingredientsList.length > 0 && lifes > 0) {
+    if(pizza.ingredientsList.length > 0 && lifes > 0) { 
         let timerDrop = setTimeout(()=> {
             currentIngredient = new Ingredient(600, 0, pizza.ingredientsList[0]);
             pizza.ingredientsList.shift() 
             clearTimeout(timerDrop);
         }, 1000);    
     }
-    else { //When finish🟠
+    else if(lifes === 0){
+        let timerGameOver = setTimeout(()=> {
+            pizza.stopPizzaTime();
+            gameOver();
+            clearTimeout(timerGameOver);
+        }, 2000);  
+    }
+    else { 
+        takeCompletedPizza();
         let minimumScore = (100/pizza.slots.length/4) * 2 * pizza.slots.length;
 
         let h1CompleteNode = document.createElement("h1");
-        if(pizza.scorePizza >= minimumScore) h1CompleteNode.innerText = "GOOD JOB";
-        else {
-            h1CompleteNode.innerText = "Do Better";
-            h1CompleteNode.style.color = "darkred";
-        }
+        // if(pizza.scorePizza >= minimumScore) h1CompleteNode.innerText = "GOOD JOB";
+        // else {
+        //     h1CompleteNode.innerText = "Do Better";
+        //     h1CompleteNode.style.color = "darkred";
+        // }
         gameBoxNode.appendChild(h1CompleteNode);
         h1CompleteNode.style.zIndex = 3;
         h1CompleteNode.style.position = "absolute";
@@ -245,12 +254,80 @@ function checkPizzaCompleted() {
         h1CompleteNode.style.top = "250px";
         h1CompleteNode.style.fontSize ="80px";
 
-        let timerGameOver = setTimeout(()=> {
-            pizza.stopPizzaTime();
-            gameOver();
-            clearTimeout(timerGameOver);
-        }, 2000);  
+        // let timerGameOver = setTimeout(()=> {
+        //     pizza.stopPizzaTime();
+        //     // gameOver();
+        //     clearTimeout(timerGameOver);
+        // }, 2000);  
     }
+}
+
+//Take completed pizza and drop new one
+function takeCompletedPizza(){
+    let palaNode = document.createElement("img");
+    palaNode.src = "imgs/pala.png";
+    gameBoxNode.appendChild(palaNode);
+    palaNode.style.animation = ("show-pala 3s");
+    palaNode.style.zIndex = 0;
+    palaNode.style.position ="absolute";
+    palaNode.style.top ="100px";
+    palaNode.style.left ="-891px";
+
+    pizzaNode.style.animation = ("show-pizza 0.6s ease-in 2s reverse");
+    pizza.slots.forEach((slot)=>{
+        slot.node.style.left = "-200px";
+        slot.node.style.transition = ("left 0.6s 2s");
+    })
+    pizza.stopPizzaTime();
+    //Timeout
+    let timerOut = setTimeout(()=>{
+        pizzaNode.style.left = "-500px";
+        pizza.removePizza();
+        palaNode.remove();
+        gameBoxNode.querySelector("ul").remove();
+        pizza = null;
+        pizzaNode = null;
+        let timerDrop = setTimeout(()=>{
+            dropNewPizza();
+            clearTimeout(timerDrop);
+        } ,800);
+        clearTimeout(timerOut);
+    } ,2590);
+
+}
+
+//Drop new pizza
+function dropNewPizza(){
+       //Entrada pala madera
+       let palaNode = document.createElement("img");
+       palaNode.src = "imgs/pala.png";
+       gameBoxNode.appendChild(palaNode);
+       palaNode.style.animation = ("show-pala 3s");
+       palaNode.style.zIndex = 0.5;
+       palaNode.style.position ="absolute";
+       palaNode.style.top ="100px";
+       palaNode.style.left ="-891px";
+   
+       //Create first pizza
+       pizza = new Pizza();
+   
+       //Create current ingredient
+       let timeoutId = setTimeout(()=>{
+           currentIngredient = new Ingredient(600, 0, pizza.ingredientsList[0]);
+           pizza.ingredientsList.shift() 
+           palaNode.remove();
+           clearTimeout(timeoutId)}
+       ,3000);
+   
+       // Place Slots in Pizza
+       timeoutId = setTimeout(()=>{
+           pizza.placeSlotsCircle(5);
+           pizza.startPizzaTime();
+           pizza.node.style.animation = "";
+           addChef(); //🔵
+           clearTimeout(timeoutId)}
+       ,2000);
+   
 }
 
 //Update lifes when collison or bad pizza
@@ -272,15 +349,14 @@ function gameOver() { //🟠
     gameViewNode.style.display = "none";
     endViewNode.style.display = "flex"
 
-    timerNode.style.color = "white";
+    timerNode.innerText = "";
+    timerNode.style.color = "black";
     scoreNode.innerText = "Score: 0 %"
 }
 
 function resetGameState(){ //🟠
     //Remove all created nodes
     document.querySelectorAll("#game-box *:not(p)").forEach((node)=>{node.remove()});
-    // timerNode.innerText = "";
-    // timerNode.style.color = "white";
     // scoreNode.innerText = "Score: 0 %"
     //Reset all variables
     lifes = 3;
@@ -305,10 +381,11 @@ function addChef() {
     chefNode = document.createElement("img");
     chefNode.src = "imgs/pizzero1.png";
     gameBoxNode.append(chefNode);
-    chefNode.style.position = "relative";
+    chefNode.style.position = "absolute";
     chefNode.style.zIndex = 3;
-    chefNode.style.top = "-150px";
-    chefNode.style.left = "-190px";
+    chefNode.style.top = "425px";
+    chefNode.style.left = "-120px";
+    chefNode.style.width = "400px";
 }
 
 function audioState(){

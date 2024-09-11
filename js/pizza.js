@@ -36,8 +36,9 @@ class Pizza {
         this.node.style.height = `${this.h}px`;
         this.node.style.top = `${this.y}px`;
         this.node.style.borderRadius = "500px";
-        this.node.style.animation = ("show 2s");
+        this.node.style.animation = ("show-pizza 2s");
         this.node.style.left = `${this.x}px`;
+        this.node.style.zIndex = 1;
     };
 
     //Place randomly each slot
