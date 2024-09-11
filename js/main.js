@@ -75,7 +75,7 @@ function startGame(){
 
     //Create current ingredient
     let timeoutId = setTimeout(()=>{
-        currentIngredient = new Ingredient(600, 0, pizza.ingredientsList[0]);
+        currentIngredient = new Ingredient(540, 0, pizza.ingredientsList[0]);
         pizza.ingredientsList.shift() 
         palaNode.remove();
         clearTimeout(timeoutId)}
@@ -186,7 +186,8 @@ function createTextOnCollision(area){
     switch(area){
         case 4:
             h2Node.innerText = "PERFECT";
-            h2Node.style.color = "#28a745"; 
+            h2Node.style.color = "#28a745";
+            chefNode.style.filter = "brightness(1.15)"
             break;
         case 3:
             h2Node.innerText = "GREAT";
@@ -203,6 +204,7 @@ function createTextOnCollision(area){
         default:
             h2Node.innerText = "MISS";
             h2Node.style.color = "#dc3545";
+            chefNode.style.filter = "saturate(0%)";
             break;
     
     }
@@ -211,6 +213,7 @@ function createTextOnCollision(area){
     let timerAnimation = setTimeout(()=>{
         h2Node.remove();
         chefNode.style.animation = ""; //🔵
+        chefNode.style.filter = ""; //🔵
         clearTimeout(timerAnimation)
     }, 1200)
 }
@@ -229,18 +232,19 @@ function checkCollisionFloor(){
 function checkPizzaCompleted() {
     if(pizza.ingredientsList.length > 0 && lifes > 0) { 
         let timerDrop = setTimeout(()=> {
-            currentIngredient = new Ingredient(600, 0, pizza.ingredientsList[0]);
+            currentIngredient = new Ingredient(540, 0, pizza.ingredientsList[0]);
             pizza.ingredientsList.shift() 
             clearTimeout(timerDrop);
         }, 1000);    
     }
     else{
         totalScore += (pizza.scorePizza + pizza.timePizza); 
-
+        scoreNode.innerText = "Score:" + totalScore;
         let minimumScore = (100/pizza.slots.length/4) * 2 * pizza.slots.length;
         if(pizza.scorePizza < minimumScore && lifes > 0) updateLifes();//Pizza mal completada
 
         if(lifes === 0){
+            gameBoxNode.style.filter = "saturate(0%)"
             let timerGameOver = setTimeout(()=> {
                 pizza.stopPizzaTime();
                 gameOver();
@@ -248,28 +252,6 @@ function checkPizzaCompleted() {
             }, 2000);  
         }
         else takeCompletedPizza();
-
-        // let h1CompleteNode = document.createElement("h1");
-
-        // if(pizza.scorePizza >= minimumScore) h1CompleteNode.innerText = "GOOD JOB";
-        // else {
-        //     h1CompleteNode.innerText = "Do Better";
-        //     h1CompleteNode.style.color = "darkred";
-        // }
-
-        // gameBoxNode.appendChild(h1CompleteNode);
-        // h1CompleteNode.style.zIndex = 3;
-        // h1CompleteNode.style.position = "absolute";
-        // h1CompleteNode.style.width = "200px";
-        // h1CompleteNode.style.left = "50%";
-        // h1CompleteNode.style.top = "250px";
-        // h1CompleteNode.style.fontSize ="80px";
-
-        // let timerGameOver = setTimeout(()=> {
-        //     pizza.stopPizzaTime();
-        //     // gameOver();
-        //     clearTimeout(timerGameOver);
-        // }, 2000);  
     }
 }
 
@@ -362,11 +344,12 @@ function gameOver() { //🟠
     scoreEndNode.innerText = `Total Score : ${totalScore}`;
     //Change scenes
     gameViewNode.style.display = "none";
+    gameBoxNode.style.filter = "";
     endViewNode.style.display = "flex"
 
     timerNode.innerText = "";
     timerNode.style.color = "black";
-    scoreNode.innerText = "Score: 0 %"
+    scoreNode.innerText = "Score: 0"
 }
 
 function resetGameState(){ //🟠

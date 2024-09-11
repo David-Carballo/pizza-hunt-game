@@ -14,7 +14,6 @@ class Pizza {
         this.timePizza = 0;
         this.intervalId = null;
         this.scorePizza = 0;
-        scoreNode.innerText = "Score:" + this.scorePizza + " %";
         //Create node
         this.node = document.createElement("img");
         gameBoxNode.appendChild(this.node);
@@ -128,7 +127,6 @@ class Pizza {
         let score = 100/this.slots.length/4;
         
         this.scorePizza = Math.floor(this.scorePizza + score*areaCollison);
-        scoreNode.innerText = "Score:" + this.scorePizza + " %";
     }
     
     removePizza(){
