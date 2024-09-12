@@ -125,7 +125,8 @@ class Pizza {
     
     setScore(areaCollison){
         let score = 100/this.slots.length/4;
-        
+        totalScore += Math.floor(score);
+        scoreNode.innerText = "Score:" + totalScore;
         this.scorePizza = Math.floor(this.scorePizza + score*areaCollison);
     }
     

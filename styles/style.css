@@ -65,17 +65,6 @@ body {
     color: #a3767c;
 }
 
-#tutorial-container {
-    display: flex;
-    justify-content: space-around;
-    align-items: flex-end;
-}
-
-#tutorial-container img{
-    position: relative;
-    top: -100px;
-}
-
 button:not(#audio-btn) {
     color: white;
     font-family: "Lilita One";
@@ -150,12 +139,19 @@ h1 {
     z-index: 3;
 }
 
+#ketchup {
+    pointer-events: all;
+}
+
 #canvas {
     position: absolute;
     width: 500px;
     height: 500px;
     top: 120px;
     left: 300px;
+    z-index: 3;
+    user-select: all;
+    pointer-events: all;
 }
 
 #timer {

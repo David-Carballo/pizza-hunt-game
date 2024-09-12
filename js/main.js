@@ -17,6 +17,10 @@ const timerNode = document.querySelector("#timer");
 const scoreNode = document.querySelector("#score");
 const nameNode = document.querySelector("#chef-name");
 const rankingNode = document.querySelector("#ranking");
+const canvasNode = document.querySelector("#canvas");
+const context = canvasNode.getContext("2d");
+context.canvas.width = 500;
+context.canvas.height = 500;
 
 //Audios
 const globalAudio = new Audio("audio/roma-italian.mp3");
@@ -28,7 +32,7 @@ const palaAudio = new Audio("audio/take_pizza.mp3");
 const newPizzaAudio = new Audio("audio/time_new_pizza.mp3");
 
 let chefNode = null;
-let ketchupNode = null;
+let ketchupNode = document.createElement("img");
 let pizzaNode = null;
 
 
@@ -48,18 +52,22 @@ let lifes = 3;
 let totalScore = 0;
 
 let gravity = 0.25;
-let totalSlots = 4;
+let totalSlots = 6;
+
+let drawing = false;
 
 let keyDown = null;
 let keyLeft = null;
 let keyRight = null;
+
+let initialX;
+let initialY;
 
 /**
  * * FUNCIONES
 */
 
 function startGame(){
-
     startAudio.currentTime = 0;
     startAudio.volume = 0.2;
     startAudio.play();
@@ -163,6 +171,7 @@ function checkCorrectPlacement() {
         currentIngredient = null;
     }
 
+
     pizza.setScore(maxSlotArea);
     createTextOnCollision(maxSlotArea);
 
@@ -196,16 +205,25 @@ function createTextOnCollision(area){
     h2Node.style.position = "absolute";
     h2Node.style.width = "200px";
     h2Node.style.fontSize = "32px";
-    h2Node.style.left = `${25}px`;
-    h2Node.style.top = `${350}px`;   
+    h2Node.style.left = "25px";
+    h2Node.style.left = "25px";
+    h2Node.style.top = "300px";   
+    if(area===10) {
+        h2Node.width = "400px"
+        h2Node.style.left = "400px";
+        h2Node.style.top = "200px";   
+    }
     h2Node.style.textAlign = "center";
     h2Node.style.webkitTextStroke = "1px white";
     h2Node.style.zIndex = 4;
 
     // puede colisionar y ser diferente type
     switch(area){
+        case 10:
+            h2Node.innerText = "Sign your PIZZA";
+            h2Node.style.color = "darkred";
+            break;
         case 4:
-
             h2Node.innerText = "PERFECT";
             h2Node.style.color = "#28a745";
             chefNode.style.filter = "brightness(1.15)"
@@ -259,10 +277,12 @@ function checkPizzaCompleted() {
         }, 1000);    
     }
     else{
-        totalScore += (pizza.scorePizza + pizza.timePizza); 
+        totalScore += pizza.timePizza; 
         scoreNode.innerText = "Score:" + totalScore;
         let minimumScore = (100/pizza.slots.length/4) * 2 * pizza.slots.length;
-        if(pizza.scorePizza < minimumScore && lifes > 0) updateLifes();//Pizza mal completada
+        if(pizza.scorePizza < minimumScore && lifes > 0) {
+            updateLifes();//Pizza mal completada
+        }
 
         if(lifes === 0){
             gameBoxNode.style.filter = "saturate(0%)"
@@ -275,7 +295,15 @@ function checkPizzaCompleted() {
                 clearTimeout(timerGameOver);
             }, 2000);  
         }
-        else takeCompletedPizza();
+        else {
+            startDraw();
+            createTextOnCollision(10)
+            let signNode = document.createElement("h1");
+            let timeoutId = setTimeout (()=>{
+                takeCompletedPizza();
+                clearTimeout(timeoutId);
+            }, 3000);
+        }
     }
 }
 
@@ -299,6 +327,12 @@ function takeCompletedPizza(){
         slot.node.style.transition = ("left 0.6s 2s");
     })
     pizza.stopPizzaTime();
+    canvasNode.style.left = "-500px";
+    canvasNode.style.transition = ("left 0.6s 2s");
+    ketchupNode.style.filter = "";
+    ketchupNode.style.top = "600px";
+    
+    drawing = false;
     //Timeout
     let timerOut = setTimeout(()=>{
         pizzaNode.style.left = "-500px";
@@ -340,6 +374,9 @@ function dropNewPizza(){
        newPizzaAudio.volume = 0.4;
        newPizzaAudio.currentTime = 0;
        newPizzaAudio.play();
+       //Reset canvas
+       context.reset();
+       canvasNode.style.left = "300px";
        //Create current ingredient
        let timeoutId = setTimeout(()=>{
            currentIngredient = new Ingredient(600, 0, pizza.ingredientsList[0]);
@@ -387,8 +424,14 @@ function gameOver() {
     timerNode.style.color = "black";
     scoreNode.innerText = "Score: 0"
 
+    setRanking();
+}
+
+function setRanking(){
     //Set ranking item
-    localStorage.setItem(nameNode.value, `${totalScore}`);
+    let name = nameNode.value;
+    if(name === "") name = "Unknown";
+    localStorage.setItem(name, `${totalScore}`);
 
     let rankingArr = [];
     for (let i = 0; i < localStorage.length; i++) {
@@ -396,12 +439,11 @@ function gameOver() {
         rankingArr.push([key, localStorage[key]])
     }
 
-    console.log(rankingArr);
     rankingArr.sort((a, b)=>{
         if(parseInt(a[1]) > parseInt(b[1])) return -1;
         else return 1;
     });
-    console.log(rankingArr);
+
     for (let i = 0; i < rankingArr.length && i < 5; i++) {
         let rowNode = document.createElement("li");
         rowNode.innerHTML = `<p> ${rankingArr[i][0]}</p> <p>${rankingArr[i][1]}</p>`;
@@ -410,10 +452,6 @@ function gameOver() {
         rowNode.style.padding = "0px 30px";
         rankingNode.append(rowNode);
     }
-    // let myIndex = rankingArr.indexOf([nameNode.value, `${totalScore}`]);
-    // let rowNode = document.createElement("li");
-    // rowNode.innerText = `${rankingArr[myIndex][0]} : ${rankingArr[myIndex][1]}`;
-    // rankingNode.append(rowNode);
 }
 
 function resetGameState(){
@@ -451,14 +489,43 @@ function addChef() {
 }
 
 function addKetchup(){
-    ketchupNode = document.createElement("img");
+    ketchupNode.id = "ketchup"
     ketchupNode.src = "imgs/ketchup.png";
-    gameBoxNode.append(ketchupNode);
     ketchupNode.style.position = "absolute";
+    gameBoxNode.append(ketchupNode);
     ketchupNode.style.zIndex = 3;
     ketchupNode.style.top = "600px";
     ketchupNode.style.left = "250px";
     ketchupNode.style.width = "70px";
+}
+
+function startDraw(){
+    // Pintar ketchup;
+    drawing = true;
+    ketchupNode.style.filter = "brightness(1.6) saturate(3)";
+    ketchupNode.style.top = "575px";
+    // ketchupNode.style.width = "90px";
+    // ketchupNode.style.filter = "saturate(3)";
+}
+
+function draw(cursorX, cursorY) {
+    //begin draw
+    context.beginPath();
+    context.moveTo(initialX,initialY);
+    //Add pencil styles
+    context.lineWidth = 10;
+    context.strokeStyle = "darkred";
+    context.lineCap = "round";
+    context.lineJoin = "round";
+
+    context.lineTo(cursorX, cursorY);
+    context.stroke();
+    // context.closePath();
+    // context.fill();
+
+    //update coordenadas del cursor
+    initialX = cursorX;
+    initialY = cursorY;
 }
 
 function audioState(){
@@ -474,6 +541,9 @@ function audioState(){
     audioOn = !audioOn;
 }
 
+function isDrawing(event) {
+    draw(event.offsetX, event.offsetY);
+}
 
 /**
  * * EVENT LISTENERS
@@ -482,6 +552,23 @@ function audioState(){
 startBtnNode.addEventListener("click", startGame);
 resetBtnNode.addEventListener("click", resetGameState);
 audioBtnNode.addEventListener("click", audioState);
+
+//Draw listeners
+ketchupNode.addEventListener("click", startDraw);
+canvasNode.addEventListener("mousedown", (event)=>{
+    if(drawing) {
+        //coordenadas relativas a la posicion del nodo
+        initialX = event.offsetX; 
+        initialY = event.offsetY;
+        draw(initialX,initialY);
+    
+        //Add event listener para llamar draw while mouse is moving
+        canvasNode.addEventListener("mousemove", isDrawing);
+    }
+});
+canvasNode.addEventListener("mouseup", (event)=>{
+    canvasNode.removeEventListener("mousemove", isDrawing)
+});
 
 window.addEventListener("keydown", (event)=>{
     if(event.key === "a" && !keyLeft && currentIngredient)  {
