@@ -50,11 +50,11 @@ let pizzaFinished = false;
 
 let chefName = "";
 
-let lifes = 3;
+let lifes = 5;
 let totalScore = 0;
 
-let gravity = 0.25;
-let totalSlots = 6;
+let gravity = 0.3;
+let totalSlots = 7;
 
 let drawing = false;
 
@@ -288,6 +288,7 @@ function checkPizzaCompleted() {
 
         if(lifes === 0){
             gameBoxNode.style.filter = "saturate(0%)"
+            globalAudio.muted = true;
             gameoverAudio.volume = 0.3;
             gameoverAudio.currentTime = 0;
             gameoverAudio.play();
@@ -406,14 +407,15 @@ function updateLifes(){
     errorAudio.currentTime = 0;
     errorAudio.play();
     let heartsNodeList = document.querySelectorAll("#hearts img");
-    if(lifes === 2) heartsNodeList[0].src = "imgs/heart_empty.png";
-    else if (lifes === 1) heartsNodeList[1].src = "imgs/heart_empty.png";
-    else heartsNodeList[2].src = "imgs/heart_empty.png";
+
+    heartsNodeList[4-lifes].src = "imgs/heart_empty.png";
+    // if(lifes === 2) heartsNodeList[0].src = "imgs/heart_empty.png";
+    // else if (lifes === 1) heartsNodeList[1].src = "imgs/heart_empty.png";
+    // else heartsNodeList[2].src = "imgs/heart_empty.png";
 
 }
 
 function gameOver() { 
-    globalAudio.muted = true;
     //DOM Game Over
     let scoreEndNode = document.querySelector("#end-score");
     scoreEndNode.innerText = `Total Score : ${totalScore}`;
@@ -474,6 +476,9 @@ function resetGameState(){
 
     let rankingNodeList = rankingNode.querySelectorAll("li");
     rankingNodeList.forEach((node)=>{node.remove()});
+
+    gravity = 0.25;
+    totalSlots = 7;
 
     clearInterval(timerGame);
     timerGame = null;
