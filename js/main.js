@@ -298,7 +298,6 @@ function checkPizzaCompleted() {
         else {
             startDraw();
             createTextOnCollision(10)
-            let signNode = document.createElement("h1");
             let timeoutId = setTimeout (()=>{
                 takeCompletedPizza();
                 clearTimeout(timeoutId);
@@ -331,6 +330,7 @@ function takeCompletedPizza(){
     canvasNode.style.transition = ("left 0.6s 2s");
     ketchupNode.style.filter = "";
     ketchupNode.style.top = "600px";
+    canvasNode.style.cursor = "";
     
     drawing = false;
     //Timeout
@@ -470,6 +470,9 @@ function resetGameState(){
     audioBtnNode.style.backgroundImage = "url(imgs/audio_on.png)";
     audioOn = true;
 
+    let rankingNodeList = rankingNode.querySelectorAll("li");
+    rankingNodeList.forEach((node)=>{node.remove()});
+
     clearInterval(timerGame);
     timerGame = null;
 
@@ -504,8 +507,7 @@ function startDraw(){
     drawing = true;
     ketchupNode.style.filter = "brightness(1.6) saturate(3)";
     ketchupNode.style.top = "575px";
-    // ketchupNode.style.width = "90px";
-    // ketchupNode.style.filter = "saturate(3)";
+    canvasNode.style.cursor = "url('../imgs/icon_ketchup50.png'), auto";
 }
 
 function draw(cursorX, cursorY) {
