@@ -10,6 +10,7 @@ const endViewNode = document.querySelector("#end-scene");
 const startBtnNode = document.querySelector("#start-btn");
 const resetBtnNode = document.querySelector("#reset-btn");
 const audioBtnNode = document.querySelector("#audio-btn");
+const fullscreenBtnNode = document.querySelector("#fullscreen-btn")
 
 ///Nodes
 const gameBoxNode = document.querySelector("#game-box");
@@ -41,6 +42,7 @@ let pizzaNode = null;
 */
 let audioOn = true;
 let timerGame = null;
+let fullScreenOn = false;
 
 let pizza = null;
 let currentIngredient = null;
@@ -547,6 +549,12 @@ function isDrawing(event) {
     draw(event.offsetX, event.offsetY);
 }
 
+function setFullScreen(){
+    fullScreenOn = !fullScreenOn;
+    if(fullScreenOn) document.querySelector("body").requestFullscreen();
+    else document.exitFullscreen();
+}
+
 /**
  * * EVENT LISTENERS
 */
@@ -554,6 +562,7 @@ function isDrawing(event) {
 startBtnNode.addEventListener("click", startGame);
 resetBtnNode.addEventListener("click", resetGameState);
 audioBtnNode.addEventListener("click", audioState);
+fullscreenBtnNode.addEventListener("click", setFullScreen);
 
 //Draw listeners
 ketchupNode.addEventListener("click", startDraw);

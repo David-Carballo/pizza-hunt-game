@@ -17,6 +17,7 @@ body {
     /* overflow: hidden; */
 }
 
+
 .container {
     background-color: lightgray;
     width: 1024px;
@@ -62,7 +63,7 @@ body {
     color: #a3767c;
 }
 
-button:not(#audio-btn) {
+button:not(#audio-btn, #fullscreen-btn) {
     color: white;
     font-family: "Lilita One";
     font-size: 30px;
@@ -224,6 +225,20 @@ h1 {
 #ranking li p{
     margin: 0px;
 }
+
+
+#fullscreen-btn {
+    background-image: url(../imgs/fullscreen.png);
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    width: 28px;
+    height: 28px;
+    background-color: transparent;
+    border: none;
+    top: 20px;
+}
+
 
 @keyframes show-pizza {
     0% {left: -500px;}
