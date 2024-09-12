@@ -123,14 +123,13 @@ class Pizza {
     }
 
     
-    setScore(areaCollison){ //Mejorar puntuaciones🟠
+    setScore(areaCollison){
         let score = 100/this.slots.length/4;
         
         this.scorePizza = Math.floor(this.scorePizza + score*areaCollison);
     }
     
     removePizza(){
-        // ulNode.remove(); 🔴🔴
         this.node.remove();
     }
 

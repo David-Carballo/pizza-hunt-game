@@ -15,6 +15,8 @@ const audioBtnNode = document.querySelector("#audio-btn");
 const gameBoxNode = document.querySelector("#game-box");
 const timerNode = document.querySelector("#timer");
 const scoreNode = document.querySelector("#score");
+const nameNode = document.querySelector("#chef-name");
+const rankingNode = document.querySelector("#ranking");
 
 //Audios
 const globalAudio = new Audio("audio/roma-italian.mp3");
@@ -26,6 +28,7 @@ const palaAudio = new Audio("audio/take_pizza.mp3");
 const newPizzaAudio = new Audio("audio/time_new_pizza.mp3");
 
 let chefNode = null;
+let ketchupNode = null;
 let pizzaNode = null;
 
 
@@ -34,15 +37,18 @@ let pizzaNode = null;
 */
 let audioOn = true;
 let timerGame = null;
+
 let pizza = null;
 let currentIngredient = null;
-let lifes = 3;
-
-let totalScore = 0;
 let pizzaFinished = false;
 
+let chefName = "";
+
+let lifes = 3;
+let totalScore = 0;
+
 let gravity = 0.25;
-let totalSlots = 7;
+let totalSlots = 4;
 
 let keyDown = null;
 let keyLeft = null;
@@ -53,6 +59,7 @@ let keyRight = null;
 */
 
 function startGame(){
+
     startAudio.currentTime = 0;
     startAudio.volume = 0.2;
     startAudio.play();
@@ -98,7 +105,8 @@ function startGame(){
         pizza.placeSlotsCircle(totalSlots);
         pizza.startPizzaTime();
         pizza.node.style.animation = "";
-        addChef(); //🔵
+        addChef();
+        addKetchup();
         clearTimeout(timeoutId)}
     ,2000);
 
@@ -181,7 +189,7 @@ function collision(ingredient, slot){
 
 //Crear texto al colocar ingrediente
 function createTextOnCollision(area){
-    chefNode.style.animation = "chef 2s"; //🔵
+    chefNode.style.animation = "chef 2s";
 
     let h2Node = document.createElement("h2");
     document.querySelector("#slots-list").appendChild(h2Node);
@@ -194,7 +202,7 @@ function createTextOnCollision(area){
     h2Node.style.webkitTextStroke = "1px white";
     h2Node.style.zIndex = 4;
 
-    // puede colisionar y ser diferente type 🟠
+    // puede colisionar y ser diferente type
     switch(area){
         case 4:
 
@@ -225,8 +233,8 @@ function createTextOnCollision(area){
 
     let timerAnimation = setTimeout(()=>{
         h2Node.remove();
-        chefNode.style.animation = ""; //🔵
-        chefNode.style.filter = ""; //🔵
+        chefNode.style.animation = "";
+        chefNode.style.filter = "";
         clearTimeout(timerAnimation)
     }, 1200)
 }
@@ -345,7 +353,8 @@ function dropNewPizza(){
            pizza.placeSlotsCircle(totalSlots);
            pizza.startPizzaTime();
            pizza.node.style.animation = "";
-           addChef(); //🔵
+           addChef();
+           addKetchup();
            clearTimeout(timeoutId)}
        ,2000);
    
@@ -364,7 +373,7 @@ function updateLifes(){
 
 }
 
-function gameOver() { //🟠
+function gameOver() { 
     globalAudio.muted = true;
     //DOM Game Over
     let scoreEndNode = document.querySelector("#end-score");
@@ -377,9 +386,37 @@ function gameOver() { //🟠
     timerNode.innerText = "";
     timerNode.style.color = "black";
     scoreNode.innerText = "Score: 0"
+
+    //Set ranking item
+    localStorage.setItem(nameNode.value, `${totalScore}`);
+
+    let rankingArr = [];
+    for (let i = 0; i < localStorage.length; i++) {
+        let key = localStorage.key(i);
+        rankingArr.push([key, localStorage[key]])
+    }
+
+    console.log(rankingArr);
+    rankingArr.sort((a, b)=>{
+        if(parseInt(a[1]) > parseInt(b[1])) return -1;
+        else return 1;
+    });
+    console.log(rankingArr);
+    for (let i = 0; i < rankingArr.length && i < 5; i++) {
+        let rowNode = document.createElement("li");
+        rowNode.innerHTML = `<p> ${rankingArr[i][0]}</p> <p>${rankingArr[i][1]}</p>`;
+        rowNode.style.display = "flex";
+        rowNode.style.justifyContent = "space-between";
+        rowNode.style.padding = "0px 30px";
+        rankingNode.append(rowNode);
+    }
+    // let myIndex = rankingArr.indexOf([nameNode.value, `${totalScore}`]);
+    // let rowNode = document.createElement("li");
+    // rowNode.innerText = `${rankingArr[myIndex][0]} : ${rankingArr[myIndex][1]}`;
+    // rankingNode.append(rowNode);
 }
 
-function resetGameState(){ //🟠
+function resetGameState(){
     //Remove all created nodes
     document.querySelectorAll("#game-box *:not(p)").forEach((node)=>{node.remove()});
     // scoreNode.innerText = "Score: 0 %"
@@ -411,6 +448,17 @@ function addChef() {
     chefNode.style.top = "425px";
     chefNode.style.left = "-120px";
     chefNode.style.width = "400px";
+}
+
+function addKetchup(){
+    ketchupNode = document.createElement("img");
+    ketchupNode.src = "imgs/ketchup.png";
+    gameBoxNode.append(ketchupNode);
+    ketchupNode.style.position = "absolute";
+    ketchupNode.style.zIndex = 3;
+    ketchupNode.style.top = "600px";
+    ketchupNode.style.left = "250px";
+    ketchupNode.style.width = "70px";
 }
 
 function audioState(){

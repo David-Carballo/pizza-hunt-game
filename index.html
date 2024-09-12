@@ -5,15 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles/style.css">
     <title>Pizza Hunt</title>
+    <link rel="icon" type="image/x-icon" href="imgs/pizza_icon.png">
 </head>
 <body>
     <audio preload="auto" src="audio/roma-italian.mp3" paused="false"></audio>
     <div id="start-scene" class="container">
         <img src="imgs/title.png" alt="game title">
-        <!-- <div id="tutorial-container">
-            <img src="imgs/tutorial1.png" alt="tutorial movimiento">
-            <img src="imgs/tutorial2.png" alt="tutorial colocacion">
-        </div> -->
+        <input type="text" id="chef-name" placeholder="Chef Name">
         <button id="start-btn">Start</button>
     </div>
     <div id="game-scene" class="container">
@@ -25,13 +23,15 @@
         <div id="game-box">
             <p id="score">Score: 0</p>
             <p id="timer"></p>
+            <canvas id="canvas"></canvas>
         </div>
         <button id="audio-btn"></button>
 
     </div>
     <div id="end-scene" class="container">
         <h1 id="end-title">CLOSED</h1>
-        <h3 id="end-score">Total Score : 0</h1>
+        <h3 id="end-score">Total Score : 0</h3>
+        <ul id="ranking"></ul>
         <button id="reset-btn">Reset</button>
     </div>
 
