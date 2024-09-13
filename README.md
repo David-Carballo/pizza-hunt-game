@@ -2,14 +2,13 @@
 
 ## [Play the Game!](https://david-carballo.github.io/pizza-hunt-game/)
 
-<img src="imgs/title.png" width="500" align="center"></img>
-
+![Game Logo](imgs/title.png)
 
 # Descripción del juego
 
 Pizza Hunt es un juego de navegador desarrollado con HTML, CSS y JavaScript, en el que el jugador debe colocar correctamente los ingredientes que caen sobre una pizza. El objetivo es completar las pizzas sin cometer errores, acumulando la máxima puntuación posible. Se pierden vidas al colocar ingredientes en los lugares incorrectos, dejar que tu ingrediente caiga al suelo o hacer pizzas que no cumplen con las expectativas. ¡Pon a prueba tu habilidad y reflejos en este desafío culinario!
 
-# Funcionalidades principales
+# Funcionalidades Principales
 
 - Los ingredientes se mueven mientras caen de izquierda a derecha pulsando `A` y `D` respectivamente.
 - Puedes aumentar la velocidad de caida del ingrediente pulsando `W`.
@@ -19,7 +18,7 @@ Pizza Hunt es un juego de navegador desarrollado con HTML, CSS y JavaScript, en 
 - La puntuación aumenta según lo bien que coloques un ingrediente y lo rápido que hagas la pizza.
 - El lugar de colocación de los ingredientes está diseñado para que aparezca uno en el centro y el resto alrededor formando un círculo.
 
-# Funcionalidades extra
+# Funcionalidades Extra
 
 - Animación de entrada y salida de las pizzas.
 - Animación del chef cada vez que colocas un nuevo ingrediente.
@@ -34,6 +33,7 @@ Pizza Hunt es un juego de navegador desarrollado con HTML, CSS y JavaScript, en 
 
 - HTML
 - CSS
+- CSS Animations
 - JavaScript
 - DOM Manipulation
 - JS Classes
