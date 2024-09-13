@@ -44,7 +44,7 @@ Pizza Hunt es un juego de navegador desarrollado con HTML, CSS y JavaScript, en 
 # Pantallas
 
 - Pantalla de inicio
-![Pantalla Inicio](imgs/screen1.png)
+![Pantalla Inicio](imgs/screen1.png | width=200)
 - Pantalla de juego
 ![Pantalla juego](imgs/screen1.png)
 - Pantalla final
