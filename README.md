@@ -1,8 +1,6 @@
-# PIZZA HUNT
-
-## [Play the Game!](https://david-carballo.github.io/pizza-hunt-game/)
-
 ![Game Logo](imgs/title.png)
+
+# PIZZA HUNT  ## [Play the Game!](https://david-carballo.github.io/pizza-hunt-game/)
 
 # Descripción del juego
 
@@ -11,10 +9,10 @@ Pizza Hunt es un juego de navegador desarrollado con HTML, CSS y JavaScript, en 
 # Funcionalidades Principales
 
 - Los ingredientes se mueven mientras caen de izquierda a derecha pulsando `A` y `D` respectivamente.
-- Puedes aumentar la velocidad de caida del ingrediente pulsando `W`.
+- Puedes aumentar la velocidad de caída del ingrediente pulsando `W`.
 - Coloca un ingrediente en la pizza al pulsar `SPACE`
 - Cada pizza tiene un tiempo máximo para colocar los ingredientes, date prisa!
-- La dificultad del juego se incrementa cada vez que completas una pizza. Más ingredientes a colocar y caen con mayor gravedad.
+- La dificultad del juego se incrementa cada vez que completas una pizza. Más ingredientes a colocar, y caen con mayor gravedad.
 - La puntuación aumenta según lo bien que coloques un ingrediente y lo rápido que hagas la pizza.
 - El lugar de colocación de los ingredientes está diseñado para que aparezca uno en el centro y el resto alrededor formando un círculo.
 
@@ -52,20 +50,26 @@ Pizza Hunt es un juego de navegador desarrollado con HTML, CSS y JavaScript, en 
 
 # Estructura del proyecto
 
-### main.js
+### [index.html](index.html)
+Estructura HTML del juego
+
+### [style.css](styles/style.css)
+Estilos y animaciones del juego
+
+### [main.js](js/main.js)
 Contiene toda la lógica del juego, DOM Manipulation y controla todos los eventos que ocurren.
 
-### pizza.js
+### [pizza.js](js/pizza.js)
 
 Clase Pizza contiene todos los atributos y métodos de la pizza: tiempo total para prepararla, puntuación de la pizza, lista de ingredientes...
 
-### slot-ingredient.js
+### [slot-ingredient.js](js/slot-ingredient.js)
 
 Clase SlotIngredient contiene los atributos y métodos del lugar donde colocar el ingrediente.
 
-### ingredient.js
+### [ingredient.js](js/ingredient.js)
 
-Clase Ingredient contiene los atributos y métodos que permiten mover el ingrediente, modificar la velocidad de movimiento y caida, etc.
+Clase Ingredient contiene los atributos y métodos que permiten mover el ingrediente, modificar la velocidad de movimiento y caída, etc.
 
 # Extra Links 
 
@@ -73,4 +77,4 @@ Clase Ingredient contiene los atributos y métodos que permiten mover el ingredi
 
 ### [Slides](https://docs.google.com/presentation/d/1ZgA6PL4nmm79Ua8FhXcfe5Rs7zDKFidkSSkIVHIyqFw/edit?usp=sharing)
 
-## [Deploy](https://david-carballo.github.io/pizza-hunt-game/)
+### [Deploy](https://david-carballo.github.io/pizza-hunt-game/)
