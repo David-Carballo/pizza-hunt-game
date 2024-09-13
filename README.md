@@ -1,6 +1,6 @@
 ![Game Logo](imgs/title.png)
 
-# PIZZA HUNT  ## [Play the Game!](https://david-carballo.github.io/pizza-hunt-game/)
+# PIZZA HUNT  [Play the Game!](https://david-carballo.github.io/pizza-hunt-game/)
 
 # Descripción del juego
 
