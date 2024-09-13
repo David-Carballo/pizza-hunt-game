@@ -2,7 +2,7 @@
 
 ## [Play the Game!](https://david-carballo.github.io/pizza-hunt-game/)
 
-![Game Logo](imgs/title.png)
+<img src="imgs/title.png" width="500" align="center"></img>
 
 
 # Descripción del juego
@@ -44,25 +44,28 @@ Pizza Hunt es un juego de navegador desarrollado con HTML, CSS y JavaScript, en 
 # Pantallas
 
 ## Pantalla de inicio
-<img src="imgs/screen1.png" width="500">
+<img src="imgs/screen1.png" width="500"></img>
 ## Pantalla de juego
-<img src="imgs/screen2.png" width="500">
+<img src="imgs/screen2.png" width="500"></img>
 ## Pantalla final
-<img src="imgs/screen3.png" width="500">
+<img src="imgs/screen3.png" width="500"></img>
 
 # Estructura del proyecto
 
 ### main.js
-
+Contiene toda la lógica del juego, DOM Manipulation y controla todos los eventos que ocurren.
 
 ### pizza.js
 
+Clase Pizza contiene todos los atributos y métodos de la pizza: tiempo total para prepararla, puntuación de la pizza, lista de ingredientes...
 
 ### slot-ingredient.js
 
+Clase SlotIngredient contiene los atributos y métodos del lugar donde colocar el ingrediente.
 
 ### ingredient.js
 
+Clase Ingredient contiene los atributos y métodos que permiten mover el ingrediente, modificar la velocidad de movimiento y caida, etc.
 
 # Extra Links 
 
