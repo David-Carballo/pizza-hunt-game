@@ -281,7 +281,9 @@ function checkPizzaCompleted() {
     else{
         totalScore += pizza.timePizza; 
         scoreNode.innerText = "Score:" + totalScore;
-        let minimumScore = (100/pizza.slots.length/4) * 2 * pizza.slots.length;
+        let minimumScore = (100/pizza.slots.length/4) * pizza.slots.length;
+        console.log(minimumScore, pizza.scorePizza);
+
         if(pizza.scorePizza < minimumScore && lifes > 0) {
             updateLifes();//Pizza mal completada
         }
@@ -352,7 +354,7 @@ function takeCompletedPizza(){
             clearTimeout(timerDrop);
         } ,800);
         clearTimeout(timerOut);
-    } ,2590);
+    } ,2550);
 
 }
 
@@ -508,10 +510,17 @@ function addKetchup(){
 
 function startDraw(){
     // Pintar ketchup;
-    drawing = true;
-    ketchupNode.style.filter = "brightness(1.6) saturate(3)";
-    ketchupNode.style.top = "575px";
-    canvasNode.style.cursor = "url('../imgs/icon_ketchup50.png'), auto";
+    drawing = !drawing;
+    if(drawing){
+        ketchupNode.style.filter = "brightness(1.6) saturate(3)";
+        ketchupNode.style.top = "575px";
+        canvasNode.style.cursor = "url('../imgs/icon_ketchup50.png'), auto";
+    }
+    else {
+        ketchupNode.style.filter = "";
+        ketchupNode.style.top = "600px";
+        canvasNode.style.cursor = "";
+    }
 }
 
 function draw(cursorX, cursorY) {
