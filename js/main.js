@@ -409,9 +409,6 @@ function updateLifes(){
     let heartsNodeList = document.querySelectorAll("#hearts img");
 
     heartsNodeList[4-lifes].src = "imgs/heart_empty.png";
-    // if(lifes === 2) heartsNodeList[0].src = "imgs/heart_empty.png";
-    // else if (lifes === 1) heartsNodeList[1].src = "imgs/heart_empty.png";
-    // else heartsNodeList[2].src = "imgs/heart_empty.png";
 
 }
 
@@ -461,9 +458,9 @@ function setRanking(){
 function resetGameState(){
     //Remove all created nodes
     document.querySelectorAll("#game-box *:not(p)").forEach((node)=>{node.remove()});
-    // scoreNode.innerText = "Score: 0 %"
+
     //Reset all variables
-    lifes = 3;
+    lifes = 5;
     let heartsNodeList = document.querySelectorAll("#hearts img");
     heartsNodeList.forEach((node)=>{node.src = "imgs/heart.png";})
 
