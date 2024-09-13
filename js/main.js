@@ -463,6 +463,8 @@ function resetGameState(){
 
     //Reset all variables
     lifes = 5;
+    totalScore = 0;
+    
     let heartsNodeList = document.querySelectorAll("#hearts img");
     heartsNodeList.forEach((node)=>{node.src = "imgs/heart.png";})
 
