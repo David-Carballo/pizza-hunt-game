@@ -48,7 +48,6 @@ class Pizza {
         let ing = this.ingredientsTypes[randomIng];
         for (let i = 0; i < total; i++) {
             this.ingredientsList.push(ing);
-            // console.log(this.node.getBoundingClientRect())
             // Posicion random del slot
             let randomX = Math.floor(Math.random() * (400 - 64)) + this.x+50;
             let randomY = Math.floor(Math.random() * (400 - 64)) + this.y+50;
@@ -125,7 +124,7 @@ class Pizza {
     
     setScore(areaCollison){
         let score = 100/this.slots.length/4;
-        totalScore += Math.floor(score);
+        totalScore += Math.floor(score*areaCollison);
         scoreNode.innerText = "Score:" + totalScore;
         this.scorePizza = Math.floor(this.scorePizza + score*areaCollison);
     }

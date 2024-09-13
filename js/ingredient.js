@@ -12,8 +12,6 @@ class Ingredient {
         this.gravityAcc = gravity;
         this.speedX = 0;
         this.speedY = 0;
-        this.maxSpeed = 5;
-        this.negativeForce = 0.99;
 
         this.node = document.createElement("img");
         this.node.src = `imgs/${type}.png`;
@@ -59,30 +57,6 @@ class Ingredient {
     }
 
     movement(){
-        //Accelerate to MAX Speed (normalize diagonal❓❓)
-        // if(keyLeft) {
-        //     if(-this.maxSpeed < this.speedX) this.speedX-=1;
-        // }
-        // if(keyRight) {
-        //     if(this.speedX < this.maxSpeed) this.speedX+=1;
-        // }
-        // if(keyDown) {
-        //     if(this.speedY < this.maxSpeed) this.speedY+=0.2;
-        // }
-
-        // if(keyLeft) {
-        //     this.speedX=-3;
-        // }
-        // if(keyRight) {
-        //     this.speedX= 3;
-        // }
-        // if(keyDown) {
-        //     this.speedY = 2;
-        // }
-
-        //Friction to reduce speed to 0 when dont pressed key
-        // this.speedX *= this.negativeForce;
-        // this.speedY *= this.negativeForce;
 
         if(keyDown && keyLeft || keyDown && keyRight) {
             this.x += this.speedX*Math.sin(45);

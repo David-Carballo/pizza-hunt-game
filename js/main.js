@@ -526,8 +526,6 @@ function draw(cursorX, cursorY) {
 
     context.lineTo(cursorX, cursorY);
     context.stroke();
-    // context.closePath();
-    // context.fill();
 
     //update coordenadas del cursor
     initialX = cursorX;
@@ -613,6 +611,4 @@ window.addEventListener("keyup", (event)=>{
     keyLeft = false;
     keyRight = false;
     keyDown = false;
-    // currentIngredient.speedX = 0;
-    // currentIngredient.speedY = 0;
 });

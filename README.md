@@ -32,7 +32,6 @@ Pizza Hunt es un juego de navegador desarrollado con HTML, CSS y JavaScript, en 
 
 # Tecnologías usadas
 
-- List here all technologies used in the project like HTML, CSS, Javascript, DOM Manipulation, Local Storage, etc
 - HTML
 - CSS
 - JavaScript
@@ -44,35 +43,31 @@ Pizza Hunt es un juego de navegador desarrollado con HTML, CSS y JavaScript, en 
 
 # Pantallas
 
-- List here the different screens of your game.
 - Pantalla de inicio
-![Pantalla Inicio] ()
+![Pantalla Inicio](imgs/screen1.png)
 - Pantalla de juego
-![Pantalla juego] ()
+![Pantalla juego](imgs/screen1.png)
 - Pantalla final
-![Pantalla final] ()
+![Pantalla final](imgs/screen1.png)
 
 # Estructura del proyecto
 
-## main.js
+### main.js
 
 
-## pizza.js
+### pizza.js
 
 
-## slot-ingredient.js
+### slot-ingredient.js
 
 
-## ingredient.js
+### ingredient.js
 
 
 # Extra Links 
 
-### Sketch
-[Sketch](https://excalidraw.com/#json=tdL9epACcaTdBw-_vJRle,lhbTvQDijF3l5X6kIrDgaA)
+### [Sketch](https://excalidraw.com/#json=tdL9epACcaTdBw-_vJRle,lhbTvQDijF3l5X6kIrDgaA)
 
-### Slides
-[Slides](www.your-slides-url-here.com)
+### [Slides](https://docs.google.com/presentation/d/1ZgA6PL4nmm79Ua8FhXcfe5Rs7zDKFidkSSkIVHIyqFw/edit?usp=sharing)
 
-## Deploy
-[Deploy](https://david-carballo.github.io/pizza-hunt-game/)
+## [Deploy](https://david-carballo.github.io/pizza-hunt-game/)
